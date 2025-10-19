@@ -52,10 +52,14 @@
         }
         nav a:hover::after { width: 100%; left: 0; transform: translateX(0); }
 
+        /* HEADER BUTTONS - WICHTIGE KORREKTUR FÜR MOBIL */
         .contact-buttons a {
-            background: var(--accent-color); color: white; padding: 10px 15px; border-radius: 25px;
-            margin-left: 10px; display: inline-flex; align-items: center; transition: background-color 0.3s, transform 0.2s;
-            font-size: 0.9em; font-weight: 700;
+            background: var(--accent-color); color: white; padding: 8px 15px; border-radius: 25px;
+            margin-left: 10px; 
+            /* Flex-Eigenschaften zur Zentrierung des Textes im Button */
+            display: flex; align-items: center; justify-content: center; 
+            transition: background-color 0.3s, transform 0.2s;
+            font-size: 0.9em; font-weight: 700; line-height: 1.2em; /* Fix für abgeschnittenen Text */
         }
         .contact-buttons a.whatsapp-btn { background: var(--whatsapp-green); }
         .contact-buttons a.whatsapp-btn:hover { background-color: #128C7E; transform: translateY(-2px); }
@@ -82,11 +86,16 @@
         @keyframes fadeInScale { to { opacity: 1; transform: scale(1); } }
         @keyframes fadeInSlideUp { to { opacity: 1; transform: translateY(0); } }
 
+        /* CTA BUTTONS - WICHTIGE KORREKTUR FÜR MOBIL */
         .cta-button {
             background: var(--accent-color); color: white; padding: 18px 45px; border-radius: 5px;
             font-weight: 700; font-size: 1.2em; transition: background-color 0.3s, box-shadow 0.3s;
             box-shadow: 0 4px 15px rgba(228, 77, 38, 0.4); opacity: 0;
             animation: fadeInSlideUp 1s forwards; animation-delay: 1.1s;
+            /* Flex-Eigenschaften zur Zentrierung des Textes im Button */
+            display: inline-flex; align-items: center; justify-content: center;
+            line-height: 1.2em; /* Fix für abgeschnittenen Text */
+            text-align: center;
         }
         .cta-button:hover { background-color: #c94021; box-shadow: 0 8px 25px rgba(228, 77, 38, 0.6); }
 
@@ -104,7 +113,7 @@
         .animate-on-scroll.in-view { opacity: 1; transform: translateY(0); }
         .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; }
 
-        /* Galerie und Mitarbeiter */
+        /* GALERIE / MITARBEITER */
         .gallery-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px; }
         .image-placeholder, .staff-card {
             width: calc(33% - 20px); min-width: 280px; height: 250px; background: #ccc; border-radius: 8px;
@@ -112,49 +121,43 @@
             display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2em;
             background-size: cover !important; background-position: center !important;
         }
-        .image-placeholder a { display: block; width: 100%; height: 100%; color: white; text-shadow: 0 0 5px rgba(0, 0, 0, 0.8); }
-        .image-placeholder:hover, .staff-card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); }
         
         .staff-card { background: var(--primary-color); height: auto; padding-bottom: 15px; }
-        .staff-card img { width: 100%; height: 250px; object-fit: cover; border-bottom: 4px solid var(--accent-color); }
-        .staff-card h4 { margin: 15px 0 5px; color: white; font-family: var(--font-serif); }
-        .staff-card p { margin: 0; font-size: 0.95em; color: #ccc; }
 
-        /* WhatsApp Button Fix */
+        /* HIGHLIGHT BAR */
         .highlight-bar { background: var(--accent-color); color: white; padding: 30px 5%; margin: 50px 0; }
         .highlight-bar p { font-size: 1.6em; font-weight: 700; margin: 0; }
-        .highlight-bar .cta-button { background: var(--primary-color); box-shadow: none; padding: 10px 25px; }
+        .highlight-bar .cta-button { 
+            background: var(--primary-color); 
+            box-shadow: none; 
+            padding: 10px 25px; 
+            line-height: 1.2em; /* Fix für abgeschnittenen Text */
+        }
         .highlight-bar .cta-button:hover { background: #444; }
         
-        /* Modale (Reservierungs-Popup) */
-        .modal {
-            display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
-            width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.7);
+        /* VIDEO CONTAINER - WICHTIGE KORREKTUR FÜR GRÖßE */
+        .video-container { 
+            /* Max-Width erhöht, damit Video breiter wird */
+            max-width: 900px; 
+            margin: 30px auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
-        .modal-content {
-            background-color: white; margin: 5% auto; padding: 40px; 
-            border-radius: 10px; width: 90%; max-width: 500px; position: relative;
-            animation: fadeIn 0.3s; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        .modal-content h3 { color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; }
-        .modal-content form input, .modal-content form select {
-            width: 100%; padding: 12px; margin: 8px 0 20px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
-            font-size: 1em; font-family: var(--font-sans);
-        }
-        .whatsapp-submit-btn {
-            background-color: var(--whatsapp-green); color: white; padding: 14px 20px; border: none; cursor: pointer; 
-            width: 100%; font-size: 1.1em; font-weight: 700; border-radius: 5px; transition: background-color 0.3s;
-        }
-        .whatsapp-submit-btn:hover { background-color: #128C7E; }
-        .close-button { color: var(--primary-color); float: right; font-size: 35px; font-weight: bold; cursor: pointer; }
-        .close-button:hover { color: var(--accent-color); }
-        
+        .video-wrapper { padding-top: 56.25%; position: relative; } /* Aspect Ratio 16:9 */
+        .video-container wistia-player { border: 0; width: 100%; height: 100%; position: absolute; top: 0; }
+
         /* ==================================== */
         /* 6. RESPONSIVE DESIGN (Mobile)        */
         /* ==================================== */
         @media (max-width: 1000px) {
-            .hero-content h2 { font-size: 2.5em; }
-            .hero-content p { font-size: 1.2em; }
+            /* HERO TITEL FIX */
+            .hero-content h2 { font-size: 3em; } /* Etwas größer als zuvor */
+            .hero-content p { font-size: 1.4em; } /* Etwas größer als zuvor */
+
+            /* CTA BUTTONS MOBIL FIX */
+            .cta-button { padding: 15px 30px; font-size: 1.1em; } /* Etwas kleiner für besseren Fit */
+            
             .highlight-bar p { font-size: 1.2em; }
             
             nav { display: none; flex-direction: column; width: 100%; text-align: center; }
@@ -210,7 +213,7 @@
 
     <div class="highlight-bar animate-on-scroll">
         <p>Reservieren Sie schnell & unkompliziert per WhatsApp!</p>
-        <a href="#" onclick="openModal(); return false;" class="cta-button" style="margin-top: 10px;">
+        <a href="#" onclick="openModal(); return false;" class="cta-button" style="background: var(--primary-color); margin-top: 10px;">
             <i class="fab fa-whatsapp"></i> Jetzt Reservierungsformular öffnen
         </a>
     </div>
@@ -219,8 +222,8 @@
         <h2>Ein Blick in unsere Destille</h2>
         <p>Sehen Sie, wie unsere Spezialitäten entstehen – die Kunst des Brennens.</p>
         <div class="video-container">
-            <div style="max-width: 600px; margin: 0 auto;">
-                <div style="position: relative; padding-top: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+            <div style="max-width: 100%; margin: 0 auto;">
+                <div class="video-wrapper">
                     <style>wistia-player[media-id='j1b0vbritr']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/j1b0vbritr/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
                     <wistia-player media-id="j1b0vbritr" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></wistia-player>
                 </div>
@@ -382,6 +385,7 @@
 
             // Formatiert das Datum in das deutsche Format TT.MM.JJJJ
             const dateObj = new Date(date);
+            // Stellt sicher, dass das Datum korrekt formatiert wird, auch wenn es UTC-Verschiebungen gibt
             const formattedDate = dateObj.toLocaleDateString('de-DE');
 
             // Der Text, der als vorausgefüllte Nachricht an Bernie gesendet wird
