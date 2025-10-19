@@ -1,434 +1,488 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Destille Bernie's Keller – Genuss an der Mosel | Kröv</title>
-  <meta name="description" content="Destille Bernie's Keller in Kröv – Regionale Küche, Weine der Mosel und gemütliches Kellerambiente. Reservieren Sie jetzt.">
-  <meta name="theme-color" content="#5A2E1D">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destille Bernie's Keller – Mosel Tradition & Moderne Küche</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* ================================================= */
+        /* 1. GLOBALE STILE & TYPOGRAFIE (STABILISIERT)      */
+        /* ================================================= */
+        :root {
+            --color-primary: #4A1C14; /* Tiefes Bordeaux / Keller-Braun */
+            --color-secondary: #B87333; /* Kupfer / Altgold-Akzent */
+            --color-accent: #E84A5F; /* Modernes Akzentrot */
+            --color-text: #333;
+            --color-bg-light: #F9F7F5; /* Cremeweiß */
+            --font-display: 'Cormorant Garamond', serif; 
+            --font-body: 'Montserrat', sans-serif; 
+        }
 
-  <meta property="og:title" content="Destille Bernie's Keller – Genuss an der Mosel">
-  <meta property="og:description" content="Regionale Küche, gemütliches Keller-Ambiente und erlesene Weine in Kröv.">
-  <meta property="og:image" content="images/og-hero.jpg">
-  <meta property="og:type" content="restaurant">
+        html { scroll-behavior: smooth; }
+        body { 
+            margin: 0; padding: 0; font-family: var(--font-body); color: var(--color-text); line-height: 1.6; 
+            background-color: white; 
+            /* Kritische Einblend-Logik wurde ins JavaScript verschoben, 
+               um den "weißen Bildschirm" bei fehlerhaftem Laden zu verhindern. 
+               Der Körper startet sichtbar. */
+        }
+        
+        /* Die Einblend-Klasse wird von JS hinzugefügt */
+        .fade-in-body {
+            animation: fadeIn 1s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="" crossorigin="anonymous">
+        h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-primary); margin-bottom: 0.5em; }
+        h2 { font-size: 3em; font-weight: 700; margin-bottom: 15px; }
+        p { font-family: var(--font-body); font-size: 1.1em; }
+        a { text-decoration: none; color: var(--color-accent); transition: color 0.3s; }
+        a:hover { color: var(--color-primary); }
 
-  <style>
-    /* css/style.css — professionelles, responsives Design */
-    :root{
-      --primary:#5A2E1D;
-      --accent:#E44D26;
-      --bg:#fbf8f6;
-      --card:#ffffff;
-      --muted:#7a7a7a;
-      --radius:12px;
-      --container:1200px;
-      --shadow: 0 8px 30px rgba(0,0,0,0.08);
-      --gap:1.25rem;
-      --max-read:70ch;
-      --transition: 220ms cubic-bezier(.2,.9,.3,1);
-      font-family: "Roboto", sans-serif;
-    }
+        /* ================================================= */
+        /* 2. STICKY HEADER & NAVIGATION                     */
+        /* ================================================= */
+        header {
+            background: rgba(255, 255, 255, 0.98); 
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 90%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease-in-out;
+        }
+        header.scrolled { padding: 10px 5%; } 
+        .logo h1 { margin: 0; font-size: 1.8em; color: var(--color-primary); transition: font-size 0.3s; }
+        header.scrolled .logo h1 { font-size: 1.5em; }
+        nav a { color: var(--color-primary); margin: 0 15px; padding: 5px 0; position: relative; font-weight: 600; }
+        nav a:hover, nav a.active { color: var(--color-accent); }
+        .contact-buttons a {
+            background: var(--color-accent); color: white; padding: 8px 15px; border-radius: 4px; 
+            margin-left: 10px; display: inline-flex; align-items: center; transition: background-color 0.3s; font-size: 0.9em;
+        }
+        .contact-buttons a:hover { background-color: var(--color-primary); }
+        .menu-toggle { display: none; font-size: 1.8em; color: var(--color-primary); cursor: pointer; }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:#222;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.5;
-    }
+        /* ================================================= */
+        /* 3. HERO & KEY FACTS                               */
+        /* ================================================= */
+        .hero {
+            padding-top: 80px; text-align: center;
+            background: linear-gradient(rgba(74, 28, 20, 0.6), rgba(74, 28, 20, 0.8)), url('[FOTO: URL des besten Restaurantfotos]'); /* FOTO HIER ERSETZEN */
+            background-size: cover; background-position: center; color: white; min-height: 85vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;
+        }
+        .hero-content h2 { font-size: 4em; color: white; margin-bottom: 20px; line-height: 1.1; }
+        .hero-content p { font-size: 1.8em; color: #ccc; margin-bottom: 40px; font-family: var(--font-display); }
 
-    /* Utilities */
-    .container{max-width:var(--container);margin:0 auto;padding:0 1rem}
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    .mt-large{margin-top:1.25rem}
-    .text-center{text-align:center}
-    .muted{color:var(--muted)}
-    .small{font-size:0.9rem}
+        .cta-button {
+            background: var(--color-accent); color: white; padding: 15px 40px; border-radius: 50px; 
+            font-weight: 700; font-size: 1.1em; letter-spacing: 1px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .cta-button:hover { background-color: #d13a4e; transform: translateY(-3px); }
 
-    /* Header */
-    .site-header{position:sticky;top:0;z-index:999;background:rgba(255,255,255,0.98);backdrop-filter: blur(6px);border-bottom:1px solid #eee}
-    .header-grid{display:flex;align-items:center;gap:1rem;padding:.9rem 0}
-    .brand{display:flex;align-items:center;gap:.75rem}
-    .logo{width:68px;height:68px;border-radius:8px;object-fit:cover}
-    .site-title{font-family:"Playfair Display",serif;margin:0;font-size:1.05rem;color:var(--primary)}
-    .site-sub{margin:0;font-size:0.85rem;color:var(--muted)}
+        /* Key Facts Bar */
+        .key-facts {
+            position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 50%); 
+            width: 90%; max-width: 1200px; background: white; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px; display: flex; justify-content: space-around; padding: 20px 0; text-align: center; z-index: 10;
+        }
+        .fact-item { flex: 1; padding: 0 15px; border-right: 1px solid #eee; }
+        .fact-item:last-child { border-right: none; }
+        .fact-item i { font-size: 1.8em; color: var(--color-secondary); margin-bottom: 5px; }
+        .fact-item strong { display: block; font-size: 1.1em; color: var(--color-primary); }
 
-    .nav{margin-left:auto;display:flex;align-items:center}
-    .nav-toggle{display:none;border:0;background:none;font-size:1.1rem;margin-right:0.5rem}
-    .nav-list{display:flex;list-style:none;padding:0;margin:0;gap:.25rem;align-items:center}
-    .nav-list a{display:inline-block;padding:.45rem .75rem;border-radius:8px;color:var(--primary);text-decoration:none;font-weight:600}
-    .nav-list a:hover{background:rgba(228,77,38,0.06);color:var(--accent)}
+        /* ================================================= */
+        /* 4. SEKTIONEN & ANIMATIONEN                        */
+        /* ================================================= */
+        .section { padding: 120px 5% 80px; text-align: center; overflow: hidden; position: relative; }
+        .section:nth-child(even) { background: var(--color-bg-light); }
 
-    .header-actions{display:flex;gap:.5rem;margin-left:1rem}
-    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem .9rem;border-radius:10px;text-decoration:none;font-weight:700}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),#c94a2a);color:#fff;box-shadow:0 8px 24px rgba(228,77,38,0.12)}
-    .btn-ghost{background:transparent;border:1px solid var(--primary);color:var(--primary)}
-    .btn-outline{border:1px solid var(--muted);background:transparent;padding:.5rem .9rem;border-radius:8px}
+        /* Animationen */
+        .animate-on-scroll {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.in-view {
+            opacity: 1; transform: translateY(0);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
 
-    /* Hero */
-    .hero{padding:3rem 0 2.5rem}
-    .hero-inner{display:grid;grid-template-columns:1fr 480px;gap:1.5rem;align-items:center}
-    .hero-copy h2{font-family:"Playfair Display",serif;font-size:2.2rem;color:var(--primary);margin:0}
-    .lead{color:var(--muted);font-size:1.05rem;margin-top:.5rem}
-    .hero-media img{width:100%;height:auto;border-radius:14px;box-shadow:var(--shadow);display:block}
+        /* Carousel Styling */
+        .carousel-container { max-width: 900px; margin: 40px auto; position: relative; overflow: hidden; border-radius: 8px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); }
+        .carousel-track { display: flex; transition: transform 0.5s ease-in-out; }
+        .carousel-slide {
+            min-width: 100%; height: 450px; background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 2em; font-family: var(--font-display); text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+        .slide-nav button {
+            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5);
+            color: white; border: none; padding: 15px; cursor: pointer; z-index: 5; font-size: 1.5em; transition: background 0.3s;
+        }
+        .slide-nav button:hover { background: rgba(0, 0, 0, 0.8); }
+        .slide-nav .prev { left: 0; border-radius: 0 5px 5px 0; }
+        .slide-nav .next { right: 0; border-radius: 5px 0 0 5px; }
 
-    /* Sections */
-    .section{padding:2.25rem 0}
-    .section-light{background:#fff;border-top:1px solid #f0eee9}
-    .media-wrap, .gallery-grid, .team-grid, .menu-grid, .reviews{margin-top:1rem}
+        /* Mitarbeiter Karten */
+        .staff-card-grid { display: flex; justify-content: center; gap: 30px; margin-top: 40px; }
+        .staff-card { width: 280px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; text-align: center; transition: box-shadow 0.3s; }
+        .staff-card:hover { box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
+        .staff-card img { width: 100%; height: 300px; object-fit: cover; }
+        .staff-info { padding: 15px; }
+        .staff-info h4 { margin: 5px 0; color: var(--color-accent); }
+        .staff-info p { font-size: 0.95em; color: #777; margin: 0; }
 
-    /* Gallery */
-    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-    .gallery-item img{width:100%;height:320px;object-fit:cover;border-radius:10px;transition:transform var(--transition)}
-    .gallery-item img:hover{transform:translateY(-6px) scale(1.03);box-shadow:var(--shadow)}
+        /* Speisekarte Links */
+        .menu-links a {
+            border: 1px solid var(--color-primary); padding: 10px 20px; border-radius: 5px; margin: 10px;
+            display: inline-block; transition: background 0.3s;
+        }
+        .menu-links a:hover { background: var(--color-primary); color: white; }
 
-    /* Team */
-    .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
-    .staff-card{background:var(--card);border-radius:12px;overflow:hidden;text-align:center;box-shadow:var(--shadow);padding-bottom:0}
-    .staff-card img{width:100%;height:220px;object-fit:cover}
-    .staff-card h4{margin:.75rem 0 .25rem;font-family:"Playfair Display",serif;color:var(--primary)}
-    .staff-card p{margin:0 0 1rem;color:var(--muted)}
+        /* ================================================= */
+        /* 5. FOOTER & IMPRESSUM                             */
+        /* ================================================= */
+        footer {
+            background: var(--color-primary); color: #ddd; padding: 50px 5% 20px; text-align: center;
+        }
+        footer .footer-note { 
+            font-size: 1.4em; font-family: var(--font-display); color: white; margin-bottom: 30px;
+            border-bottom: 2px solid var(--color-secondary); padding-bottom: 10px; display: inline-block; max-width: 600px;
+        }
+        footer .footer-nav a { color: #ccc; margin: 0 15px; }
+        footer .footer-nav a:hover { color: var(--color-secondary); }
 
-    /* Menu cards */
-    .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-    .menu-card{display:block;background:var(--card);border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;box-shadow:var(--shadow)}
-    .menu-card img{width:100%;height:160px;object-fit:cover}
-    .menu-body{padding:.9rem}
+        .impressum-content { 
+            background: rgba(255, 255, 255, 0.05); padding: 25px; margin-top: 40px; border-radius: 5px; 
+            text-align: left; max-width: 900px; margin-left: auto; margin-right: auto; font-size: 0.9em;
+        }
+        .impressum-content h3 { color: var(--color-secondary); margin-top: 0; }
+        .impressum-content p { margin: 8px 0; color: #ddd; }
 
-    /* Reviews */
-    .reviews{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    .review{background:linear-gradient(180deg,#fff,#fff);padding:1rem;border-left:4px solid var(--accent);border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.03)}
+        /* ================================================= */
+        /* 6. RESPONSIVE DESIGN                              */
+        /* ================================================= */
+        @media (max-width: 1000px) {
+            h2 { font-size: 2em; }
+            .hero-content h2 { font-size: 3em; }
+            .hero-content p { font-size: 1.4em; }
 
-    /* Contact */
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-    .contact-form{display:flex;flex-direction:column;gap:.5rem;max-width:100%}
-    .contact-form input,.contact-form textarea{padding:.6rem;border:1px solid #e6e6e6;border-radius:8px;font-size:1rem}
-    .form-actions{display:flex;gap:.5rem;align-items:center}
+            /* Mobile Navigation */
+            nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: white; box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05); }
+            nav a { padding: 15px 5%; margin: 0; border-bottom: 1px solid #eee; }
+            .contact-buttons { display: none; } 
+            .menu-toggle { display: block; }
+            header.nav-open nav { display: flex; }
 
-    /* Map */
-    .map-container iframe{width:100%;height:280px;border:0;border-radius:10px}
-
-    /* Footer */
-    .site-footer{background:#222;color:#ddd;padding:2rem 0;margin-top:2rem}
-    .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;align-items:start}
-    .footer-brand{font-family:"Playfair Display",serif;margin:0}
-
-    /* Responsive */
-    @media (max-width:1000px){
-      .hero-inner{grid-template-columns:1fr}
-      .gallery-grid{grid-template-columns:repeat(2,1fr)}
-      .team-grid{grid-template-columns:repeat(2,1fr)}
-      .menu-grid{grid-template-columns:repeat(2,1fr)}
-      .nav-toggle{display:inline-block}
-      .nav-list{display:none;position:absolute;right:1rem;top:72px;background:#fff;padding:.5rem;border-radius:8px;box-shadow:var(--shadow);flex-direction:column}
-      .nav-list.show{display:flex;flex-direction:column}
-      .grid-2{grid-template-columns:1fr}
-    }
-
-    @media (max-width:600px){
-      .gallery-grid,.menu-grid{grid-template-columns:1fr}
-      .team-grid{grid-template-columns:1fr}
-      .site-title{font-size:1rem}
-      .header-grid{gap:.5rem}
-    }
-  </style>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Restaurant",
-    "name":"Destille Bernie's Keller",
-    "image":["images/og-hero.jpg","images/innen1.jpg"],
-    "telephone":"065418689841",
-    "address":{
-      "@type":"PostalAddress",
-      "streetAddress":"Robert-Schuman-Str. 71",
-      "addressLocality":"Kröv",
-      "postalCode":"54536",
-      "addressCountry":"DE"
-    },
-    "servesCuisine":["Regional","German"],
-    "url":""
-  }
-  </script>
+            /* Key Facts Mobile Layout */
+            .key-facts { flex-direction: column; position: static; transform: none; width: 100%; border-radius: 0; margin-top: 40px; padding: 20px 0; }
+            .fact-item { border-right: none; border-bottom: 1px solid #eee; padding: 15px 0; }
+            .fact-item:last-child { border-bottom: none; }
+            .section { padding: 80px 5% 50px; }
+            .staff-card-grid { flex-direction: column; align-items: center; }
+            .staff-card { width: 90%; }
+        }
+    </style>
 </head>
+
 <body>
-  <a class="skip-link" href="#main">Zum Inhalt springen</a>
-
-  <header id="main-header" class="site-header" role="banner" aria-label="Hauptnavigation">
-    <div class="container header-grid">
-      <div class="brand">
-        <img src="images/logo.svg" alt="Destille Bernie's Keller" class="logo" width="74" height="74">
-        <div>
-          <h1 class="site-title">Destille Bernie's Keller</h1>
-          <p class="site-sub">Genuss an der Mosel · Kröv</p>
+    <script src="https://fast.wistia.com/player.js" async></script>
+    <script src="https://fast.wistia.com/embed/j1b0vbritr.js" async type="module"></script>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    
+    <header id="main-header">
+        <div class="logo">
+            <h1>Destille Bernie's Keller</h1>
         </div>
-      </div>
-
-      <nav id="main-nav" class="nav" role="navigation" aria-label="Hauptnavigation">
-        <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="nav-list">
-          <span class="sr-only">Navigation ein-/ausblenden</span>
-          <i class="fas fa-bars" aria-hidden="true"></i>
-        </button>
-        <ul id="nav-list" class="nav-list">
-          <li><a href="#start">Start</a></li>
-          <li><a href="#restaurant">Restaurant</a></li>
-          <li><a href="#speisekarte">Speisekarte</a></li>
-          <li><a href="#bewertungen">Bewertungen</a></li>
-          <li><a href="#kontakt">Kontakt</a></li>
-          <li><a href="#impressum">Impressum</a></li>
-        </ul>
-      </nav>
-
-      <div class="header-actions">
-        <a class="btn btn-ghost" href="tel:065418689841" aria-label="Anrufen">📞 06541 8689841</a>
-        <a class="btn btn-primary" href="#kontakt" aria-label="Tisch reservieren">TISCH RESERVIEREN</a>
-      </div>
-    </div>
-  </header>
-
-  <main id="main">
-    <section id="start" class="hero" aria-label="Hero">
-      <div class="hero-inner container">
-        <div class="hero-copy">
-          <h2>Genuss trifft Tradition — Ihr Keller-Erlebnis an der Mosel</h2>
-          <p class="lead">Regionale Köstlichkeiten, handverlesene Weine und eine Atmosphäre zum Verweilen.</p>
-          <div class="hero-actions">
-            <a class="btn btn-cta" href="#kontakt">TISCH RESERVIEREN</a>
-            <a class="link" href="#speisekarte">Speisekarte ansehen</a>
-          </div>
+        
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
         </div>
-        <figure class="hero-media" aria-hidden="true">
-          <img src="images/hero.jpg" alt="Stimmungsvolle Innenansicht von Bernie's Keller" loading="lazy" width="1200" height="800">
-        </figure>
-      </div>
-    </section>
 
-    <div class="highlight-bar container" role="note" aria-live="polite">
-      <p>⚠️ Wir empfehlen eine frühzeitige Tischreservierung — vor allem an Wochenenden.</p>
-    </div>
+        <nav id="main-nav">
+            <a href="#start">Start</a>
+            <a href="#facts">Infos</a>
+            <a href="#restaurant">Impressionen</a>
+            <a href="#speisekarte">Speisekarte</a>
+            <a href="#bewertungen">Bewertungen</a>
+            <a href="#kontakt">Reservierung</a>
+        </nav>
 
-    <section class="section container" aria-labelledby="section-destille">
-      <h2 id="section-destille">Ein Blick in unsere Destille</h2>
-      <div class="media-wrap">
-        <div class="video-container" aria-hidden="false">
-          <iframe src="https://fast.wistia.com/embed/medias/j1b0vbritr/embed/mediatype/video" title="Video: Ein Blick in unsere Destille" allowfullscreen loading="lazy"></iframe>
+        <div class="contact-buttons">
+            <a href="tel:065418689841"><i class="fas fa-phone"></i> Anrufen</a>
+            <a href="https://wa.me/491739000432" target="_blank"><i class="fab fa-whatsapp"></i> Chat</a>
         </div>
-      </div>
-    </section>
+    </header>
 
-    <section id="restaurant" class="section container" aria-labelledby="section-atmo">
-      <h2 id="section-atmo">Unsere Atmosphäre</h2>
-      <p class="lead">Authentische Gemütlichkeit — rustikal, warm und einladend.</p>
+    <section id="start" class="hero">
+        <div class="hero-content animate-on-scroll">
+            <h2>Tradition trifft Moderne. Willkommen in Bernie's Keller.</h2>
+            <p>Wo Mosel-Genuss und herzliche Gastfreundschaft zuhause sind.</p>
+            <a href="#kontakt" class="cta-button">TISCH JETZT RESERVIEREN</a>
+        </div>
 
-      <div class="gallery-grid" aria-hidden="false">
-        <figure class="gallery-item">
-          <img src="images/innen1.jpg" alt="Gedeckter Tisch im Innenbereich" loading="lazy" width="1200" height="800">
-        </figure>
-        <figure class="gallery-item">
-          <img src="images/keller2.jpg" alt="Keller-Ambiente mit Weinregalen" loading="lazy" width="1200" height="800">
-        </figure>
-        <figure class="gallery-item">
-          <img src="images/terrasse.jpg" alt="Terrasse mit Blick" loading="lazy" width="1200" height="800">
-        </figure>
-      </div>
-
-      <h3 class="mt-large">Das Team von Bernie's Keller</h3>
-      <p class="muted">Mit Herz & Hand — wir freuen uns auf Ihren Besuch.</p>
-      <div class="team-grid">
-        <article class="staff-card">
-          <img src="images/team1.jpg" alt="Bernie, Inhaber" loading="lazy" width="800" height="800">
-          <h4>Bernie</h4>
-          <p class="muted">Küchenchef & Gastgeber</p>
-        </article>
-        <article class="staff-card">
-          <img src="images/team2.jpg" alt="Anna, Service & Weinberatung" loading="lazy" width="800" height="800">
-          <h4>Anna</h4>
-          <p class="muted">Service & Weinberatung</p>
-        </article>
-        <article class="staff-card">
-          <img src="images/team3.jpg" alt="Max, Küche" loading="lazy" width="800" height="800">
-          <h4>Max</h4>
-          <p class="muted">Küche</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="speisekarte" class="section section-light container" aria-labelledby="section-menu">
-      <h2 id="section-menu">Speisen & Getränke</h2>
-      <p class="lead">Frische, regionale Küche — saisonal & handgemacht.</p>
-
-      <div class="menu-grid">
-        <a class="menu-card" href="images/speisekarte1.jpg" target="_blank" rel="noopener">
-          <img src="images/speisekarte1-thumb.jpg" alt="Speisekarte Vorspeisen" loading="lazy">
-          <div class="menu-body">
-            <h3>Vorspeisen</h3>
-            <p class="muted">Leichte, regionale Startgerichte</p>
-          </div>
-        </a>
-        <a class="menu-card" href="images/speisekarte2.jpg" target="_blank" rel="noopener">
-          <img src="images/speisekarte2-thumb.jpg" alt="Speisekarte Hauptgerichte" loading="lazy">
-          <div class="menu-body">
-            <h3>Hauptgerichte</h3>
-            <p class="muted">Herzhaft & saisonal</p>
-          </div>
-        </a>
-        <a class="menu-card" href="images/speisekarte3.jpg" target="_blank" rel="noopener">
-          <img src="images/speisekarte3-thumb.jpg" alt="Speisekarte Getränke & Desserts" loading="lazy">
-          <div class="menu-body">
-            <h3>Getränke & Dessert</h3>
-            <p class="muted">Weine der Mosel & hausgemachte Desserts</p>
-          </div>
-        </a>
-      </div>
-
-      <p class="text-center mt-large">
-        <a class="btn btn-outline" href="images/speisekarte-full.pdf" download>Speisekarte als PDF herunterladen</a>
-      </p>
-    </section>
-
-    <section id="bewertungen" class="section container" aria-labelledby="section-reviews">
-      <h2 id="section-reviews">Das sagen unsere Gäste</h2>
-      <div class="reviews">
-        <blockquote class="review">
-          <p>„Ausgezeichnete Küche, toller Wein – ein Ort zum Wiederkommen.“</p>
-          <footer>— Lena, Trier</footer>
-        </blockquote>
-        <blockquote class="review">
-          <p>„Wundervolles Ambiente, persönlicher Service.“</p>
-          <footer>— Thomas, Bernkastel</footer>
-        </blockquote>
-      </div>
-    </section>
-
-    <section id="kontakt" class="section section-light container" aria-labelledby="section-contact">
-      <h2 id="section-contact">Kontakt & Anfahrt</h2>
-
-      <div class="grid-2">
-        <div>
-          <h3>Adresse</h3>
-          <p>Robert-Schuman-Str. 71<br>54536 Kröv</p>
-
-          <h3>Reservierung</h3>
-          <p>Telefon: <a href="tel:065418689841">06541 8689841</a><br>
-          WhatsApp: <a href="https://wa.me/491739000432" rel="noopener" target="_blank">+49 173 9000432</a></p>
-
-          <h3>Kontaktformular</h3>
-          <form id="contact-form" action="mailto:info@example.com" method="post" enctype="text/plain" class="contact-form" aria-label="Kontaktformular">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" required>
-            <label for="email">E-Mail</label>
-            <input id="email" name="email" type="email" required>
-            <label for="message">Nachricht</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Absenden</button>
-              <button type="reset" class="btn btn-ghost">Zurücksetzen</button>
+        <div id="facts" class="key-facts animate-on-scroll delay-2">
+            <div class="fact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <strong>Standort</strong>
+                <p>54536 Kröv, Mosel</p>
             </div>
-            <p class="muted small">Hinweis: Dieses Formular nutzt <code>mailto:</code>. Für echte Formularverarbeitung bitte ein kleines Backend (z.B. Formspree, Netlify Forms oder PHP) einrichten.</p>
-          </form>
+            <div class="fact-item">
+                <i class="fas fa-clock"></i>
+                <strong>Öffnungszeiten</strong>
+                <p>[PLATZHALTER: Mo-So, z.B. 17:00 – 22:00 Uhr]</p>
+            </div>
+            <div class="fact-item">
+                <i class="fas fa-utensils"></i>
+                <strong>Küche</strong>
+                <p>Deutsch/Regional</p>
+            </div>
+            <div class="fact-item">
+                <i class="fas fa-phone-alt"></i>
+                <strong>Kontakt</strong>
+                <p><a href="tel:065418689841" style="color: var(--color-text);">06541 8689841</a></p>
+            </div>
         </div>
-
-        <div>
-          <h3>Karte</h3>
-          <div class="map-container" role="region" aria-label="Karte zu Robert-Schuman-Str. 71">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!..." loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <section id="impressum" class="section container" aria-labelledby="section-impressum">
-      <h2 id="section-impressum">Impressum</h2>
-      <p><strong>Angaben gemäß § 5 TMG</strong><br>
-      Destille Bernie's Keller<br>
-      Robert-Schuman-Str. 71<br>
-      54536 Kröv</p>
+    <section id="restaurant" class="section">
+        <h2 class="animate-on-scroll">Einblick in unser Zuhause</h2>
+        <p class="animate-on-scroll delay-1">Erleben Sie die Atmosphäre, die unsere Gäste so lieben.</p>
+        
+        <div class="carousel-container animate-on-scroll delay-2">
+            <div class="carousel-track" id="carousel-track">
+                <div class="carousel-slide" style="background-image: url('[FOTO 1: URL eines Tisches/Deko]');">Gemütliche Ecken</div>
+                <div class="carousel-slide" style="background-image: url('[FOTO 2: URL einer Speise/Wein]');">Kulinarische Höhepunkte</div>
+                <div class="carousel-slide" style="background-image: url('[FOTO 3: URL vom Keller/Rustikal]');">Historisches Ambiente</div>
+            </div>
+            <div class="slide-nav">
+                <button class="prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
 
-      <p><strong>Vertreten durch:</strong> Bernie (Inhaber)<br>
-      <strong>Kontakt:</strong> Telefon: 06541 8689841 · E-Mail: info@example.com</p>
-
-      <p>USt-IdNr. und weitere Pflichtangaben bitte ergänzen.</p>
+        <div style="margin-top: 50px;">
+            <h3 class="animate-on-scroll">Lernen Sie unser Team kennen</h3>
+            <p class="animate-on-scroll delay-1">Herzlichkeit und Professionalität – dafür stehen wir.</p>
+            <div class="staff-card-grid">
+                <div class="staff-card animate-on-scroll delay-1">
+                    <img src="[FOTO: URL Mitarbeiter 1]" alt="Foto Mitarbeiter 1">
+                    <div class="staff-info">
+                        <h4>Bernie Keller</h4>
+                        <p>Inhaber & Küchenchef</p>
+                    </div>
+                </div>
+                <div class="staff-card animate-on-scroll delay-2">
+                    <img src="[FOTO: URL Mitarbeiter 2]" alt="Foto Mitarbeiter 2">
+                    <div class="staff-info">
+                        <h4>[Name Service]</h4>
+                        <p>Restaurantleitung & Sommelier</p>
+                    </div>
+                </div>
+                <div class="staff-card animate-on-scroll delay-3">
+                    <img src="[FOTO: URL Mitarbeiter 3]" alt="Foto Mitarbeiter 3">
+                    <div class="staff-info">
+                        <h4>[Name Bar]</h4>
+                        <p>Bar & Empfang</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <footer class="site-footer" role="contentinfo">
-    <div class="container footer-grid">
-      <div>
-        <p class="footer-brand">Destille Bernie's Keller<br><small>Robert-Schuman-Str. 71 · 54536 Kröv</small></p>
-      </div>
-      <div>
-        <p>Öffnungszeiten: Di–Fr 17:30–22:00 · Sa 12:00–14:30 & 17:30–22:30 · So 12:00–15:00</p>
-      </div>
-      <div>
-        <p>Folgen: <a href="#" aria-label="Instagram">Instagram</a> · <a href="#" aria-label="Facebook">Facebook</a></p>
-      </div>
-    </div>
-    <div class="container">
-      <p class="copyright">© <span id="year"></span> Destille Bernie's Keller. Alle Rechte vorbehalten.</p>
-    </div>
-  </footer>
+    <section id="speisekarte" class="section animate-on-scroll" style="background: var(--color-bg-light);">
+        <h2>Unsere Kulinarik</h2>
+        <p class="animate-on-scroll delay-1">Frische Zutaten, liebevoll zubereitet. Entdecken Sie unsere Auswahl.</p>
+        
+        <div class="menu-links animate-on-scroll delay-2">
+            <a href="[FOTO: URL Speisekarte 1]" target="_blank"><i class="fas fa-book-open"></i> Speisen</a>
+            <a href="[FOTO: URL Speisekarte 2]" target="_blank"><i class="fas fa-wine-bottle"></i> Getränke & Wein</a>
+            <a href="[PLATZHALTER: PDF-Link zur Speisekarte]" class="cta-button" style="background: var(--color-primary);"><i class="fas fa-download"></i> Speisekarte PDF</a>
+        </div>
 
-  <script>
-    // js/main.js — Navigation, accessibility, small UI helpers
-    document.addEventListener('DOMContentLoaded', () => {
-      // year in footer
-      const yearEl = document.getElementById('year');
-      if (yearEl) yearEl.textContent = new Date().getFullYear();
+        <div style="max-width: 700px; margin: 50px auto 0;">
+             <h3 class="animate-on-scroll">Unser Video-Portrait</h3>
+            <div style="position: relative; padding-top: 56.25%; height: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                <style>wistia-player[media-id='j1b0vbritr']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/j1b0vbritr/swatch'); display: block; filter: blur(5px); position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> 
+                <wistia-player media-id="j1b0vbritr" aspect="0.5576923076923077" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></wistia-player>
+            </div>
+        </div>
+    </section>
 
-      // Mobile nav toggle
-      const navToggle = document.getElementById('nav-toggle');
-      const navList = document.getElementById('nav-list');
-      navToggle && navToggle.addEventListener('click', () => {
-        const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-        navToggle.setAttribute('aria-expanded', String(!expanded));
-        navList.classList.toggle('show');
-      });
+    <section id="bewertungen" class="section animate-on-scroll">
+        <h2>Was unsere Gäste sagen</h2>
+        <p class="animate-on-scroll delay-1">Ihre Meinung ist uns wichtig – lesen Sie die neuesten Google-Bewertungen.</p>
+        <div style="max-width: 800px; margin: 30px auto;">
+            <div class="elfsight-app-b418132b-5223-43b2-b58f-bebcc918cece" data-elfsight-app-lazy></div>
+        </div>
+    </section>
 
-      // Smooth anchor scrolling (enhanced)
-      document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', (e) => {
-          const targetId = a.getAttribute('href');
-          if (targetId.length > 1) {
-            const target = document.querySelector(targetId);
-            if (target) {
-              e.preventDefault();
-              target.scrollIntoView({behavior:'smooth', block:'start'});
-              // close mobile nav if open
-              if (navList.classList.contains('show')) navList.classList.remove('show');
+    <section id="kontakt" class="section animate-on-scroll" style="background-color: var(--color-primary); color: white;">
+        <h2 style="color: white;">Reservieren Sie Ihren Tisch</h2>
+        <p class="animate-on-scroll delay-1" style="font-size: 1.4em; color: var(--color-secondary);">
+            Bitte reservieren Sie frühzeitig – wir freuen uns darauf, Sie zu verwöhnen!
+        </p>
+
+        <div style="max-width: 900px; margin: 40px auto;">
+            <h3 style="color: white;">So finden Sie uns:</h3>
+            <div style="height: 400px; border-radius: 8px; overflow: hidden; margin-top: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
+                <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" 
+                    src="[PLATZHALTER: AKTUELLE GOOGLE MAPS IFRAME URL]" allowfullscreen>
+                </iframe> 
+            </div>
+            
+            <p style="margin-top: 10px; font-size: 0.8em; color: #aaa;">
+                <a href='https://www.wgglobal.de/Warensicherung_Einzelhandel.html' style="color: #aaa;">Warensicherungssysteme Einzelhandel</a>
+                <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=6dafd6b6fdbec64838e519dd3fa158c408b1f530'></script>
+            </p>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="tel:065418689841" class="cta-button" style="background: var(--color-secondary); margin: 10px;"><i class="fas fa-phone"></i> Anrufen: 06541 8689841</a>
+            <a href="https://wa.me/491739000432" target="_blank" class="cta-button" style="background: #25D366; margin: 10px;"><i class="fab fa-whatsapp"></i> WhatsApp Chat</a>
+        </div>
+    </section>
+
+    <footer>
+        <p class="footer-note">
+            "Als Ersteller dieser Webseite kann ich nur bestätigen: Das Essen hat mir hervorragend geschmeckt!"
+        </p>
+
+        <nav class="footer-nav">
+            <a href="#start">Start</a>
+            <a href="#restaurant">Restaurant</a>
+            <a href="#speisekarte">Speisekarte</a>
+            <a href="#impressum-section">Impressum</a>
+            <a href="#datenschutz">Datenschutz</a>
+        </nav>
+
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+
+        <div class="impressum-content" id="impressum-section">
+            <h3>Impressum (Angaben gemäß § 5 TMG)</h3>
+            <p>
+                **Verantwortlich:** [VOLLSTÄNDIGER NAME/FIRMA]<br>
+                Robert-Schuman-Str. 71<br>
+                54536 Kröv
+            </p>
+            <p>
+                **Vertretungsberechtigt:** [VOLLSTÄNDIGER NAME]<br>
+                **Kontakt:**<br>
+                Telefon: 06541 8689841<br>
+                Mobil: +49 173 9000432<br>
+                E-Mail: [E-Mail-Adresse einfügen]
+            </p>
+            <p>[Weitere rechtlich notwendige Angaben (Umsatzsteuer-Identifikationsnummer, Registereinträge etc.)]</p>
+        </div>
+        
+        <p style="margin-top: 25px; font-size: 0.8em; color: #999;">&copy; 2025 Destille Bernie's Keller. Made with passion.</p>
+    </footer>
+
+    <script>
+        // 8.1 KRITISCHE KORREKTUR: FADE-IN FÜR BODY SICHERSTELLEN
+        document.addEventListener('DOMContentLoaded', () => {
+             // Fügt die Klasse hinzu, sobald das DOM geladen ist
+            document.body.classList.add('fade-in-body'); 
+        });
+
+
+        // 8.2 Sticky Header Logik (Schrumpfen beim Scrollen)
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
             }
-          }
         });
-      });
 
-      // Shrink header on scroll
-      const header = document.getElementById('main-header');
-      let lastScroll = 0;
-      window.addEventListener('scroll', () => {
-        const sc = window.scrollY;
-        if (sc > 80) header.classList.add('scrolled');
-        else header.classList.remove('scrolled');
-        lastScroll = sc;
-      }, {passive:true});
-
-      // IntersectionObserver for reveal animations
-      const revealItems = document.querySelectorAll('.gallery-item, .staff-card, .menu-card, .review, .section h2, .highlight-bar');
-      const io = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            obs.unobserve(entry.target);
-          }
+        // 8.3 Mobile Navigation Toggle
+        function toggleMenu() {
+            header.classList.toggle('nav-open');
+            const nav = document.getElementById('main-nav');
+            if (header.classList.contains('nav-open')) {
+                nav.style.display = 'flex';
+            } else if (window.innerWidth <= 1000) {
+                nav.style.display = 'none';
+            }
+        }
+        window.addEventListener('resize', () => {
+            const nav = document.getElementById('main-nav');
+            if (window.innerWidth > 1000) {
+                nav.style.display = 'flex';
+                header.classList.remove('nav-open');
+            } else if (!header.classList.contains('nav-open')) {
+                nav.style.display = 'none';
+            }
         });
-      }, {threshold: 0.12});
-      revealItems.forEach(el => io.observe(el));
-    });
-  </script>
-  </body>
+        document.querySelectorAll('#main-nav a').forEach(a => a.addEventListener('click', () => {
+            if (window.innerWidth <= 1000) {
+                toggleMenu();
+            }
+        }));
+
+        // 8.4 Intersection Observer (Animate On Scroll)
+        const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+        const observerOptions = { root: null, threshold: 0.1 };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        elementsToAnimate.forEach(element => {
+            observer.observe(element);
+        });
+
+        // 8.5 Simple Carousel Logic
+        let slideIndex = 0;
+        const track = document.getElementById('carousel-track');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+
+        function moveSlide(n) {
+            slideIndex += n;
+            if (slideIndex >= totalSlides) {
+                slideIndex = 0;
+            } else if (slideIndex < 0) {
+                slideIndex = totalSlides - 1;
+            }
+            if(track) { // Zusätzliche Überprüfung, ob das Element existiert
+                track.style.transform = `translateX(-${slideIndex * 100}%)`;
+            }
+        }
+
+        // Automatischer Wechsel
+        if(totalSlides > 1) { // Nur starten, wenn es mehr als 1 Slide gibt
+             setInterval(() => {
+                moveSlide(1);
+            }, 5000); 
+        }
+
+        window.addEventListener('load', () => {
+            moveSlide(0);
+        });
+    </script>
+</body>
 </html>
