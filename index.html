@@ -117,7 +117,7 @@
         .video-container { 
             /* Erlaubt dem Container, so breit wie die Sektion zu werden */
             max-width: none; 
-            margin: 30px 0; /* Entfernt Ränder auf den Seiten, die über Sektion hinausgehen */
+            margin: 30px 0; 
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -137,6 +137,9 @@
         .staff-card { background: var(--primary-color); height: auto; padding-bottom: 15px; }
 
         /* FOOTER */
+        footer {
+            background: var(--primary-color); color: white; text-align: center; padding: 40px 5%;
+        }
         footer .footer-note { 
             font-size: 1.2em; 
             font-family: var(--font-serif);
@@ -146,6 +149,11 @@
             padding-bottom: 10px;
             display: inline-block;
         }
+        .legal-links a { color: #ccc; margin: 0 10px; font-size: 0.9em; }
+        .legal-links a:hover { color: white; }
+        .social-icons a { color: white; font-size: 1.5em; margin: 0 10px; transition: color 0.3s; }
+        .social-icons { margin-top: 20px; }
+        .social-icons a:hover { color: var(--accent-color); }
 
         /* ==================================== */
         /* 6. RESPONSIVE DESIGN (Mobile)        */
@@ -166,6 +174,27 @@
             
             .section { padding: 60px 5%; }
         }
+
+        /* MODAL STYLES */
+        .modal {
+            display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%;
+            overflow: auto; background-color: rgba(0,0,0,0.8);
+        }
+        .modal-content {
+            background-color: #fefefe; margin: 15% auto; padding: 30px; border: 1px solid #888;
+            width: 90%; max-width: 500px; border-radius: 10px; position: relative;
+        }
+        .close-button {
+            color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;
+        }
+        .close-button:hover, .close-button:focus { color: #000; text-decoration: none; }
+        #whatsappForm label { display: block; margin-top: 10px; font-weight: bold; }
+        #whatsappForm input, #whatsappForm select { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .whatsapp-submit-btn {
+            background: var(--whatsapp-green); color: white; padding: 15px; border: none; border-radius: 5px;
+            width: 100%; font-size: 1.1em; cursor: pointer; transition: background-color 0.3s;
+        }
+        .whatsapp-submit-btn:hover { background-color: #128C7E; }
     </style>
 </head>
 
@@ -284,9 +313,9 @@
         </p>
 
         <div class="map-container">
-            <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" 
-                src="[PLATZHALTER: AKTUELLE GOOGLE MAPS IFRAME URL ZU Robert-Schuman-Str. 71, 54536 Kröv]" allowfullscreen>
-            </iframe> 
+            <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" src="https://maps.google.com/maps?width=520&height=400&hl=en&q=Robert-Schuman-Stra%C3%9Fe%2071%20Kr%C3%B6v%20+(Restaurant%20Destille%20Bernie's%20Keller)&t=&z=12&ie=UTF8&iwloc=B&output=embed"></iframe> 
+            <a href='https://www.wgglobal.de/Warensicherung_Einzelhandel.html' style="display: block; margin-top: 5px; font-size: 0.8em; color: #777;">Warensicherungssysteme Einzelhandel</a> 
+            <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=6dafd6b6fdbec64838e519dd3fa158c408b1f530'></script>
         </div>
         
         <a href="#" onclick="openModal(); return false;" class="cta-button" style="background: var(--whatsapp-green); margin-top: 30px;">
@@ -310,7 +339,7 @@
             <a href="https://www.instagram.com/restaurant_destille?igsh=MTZseHJzNWpza2luZg==" target="_blank"><i class="fab fa-instagram"></i></a>
         </div>
 
-        <p style="margin-top: 15px; font-size: 0.8em;">&copy; 2025 Restaurant Destille Bernie's Keller. Alle Rechte vorbehalten.</p>
+        <p style="margin-top: 15px; font-size: 0.8em;">© 2025 Restaurant Destille Bernie's Keller. Alle Rechte vorbehalten.</p>
 
         <div id="impressum-section" style="margin-top: 40px; text-align: left; padding: 0 20px;">
             <h3 style="color: white; border-bottom: 1px solid #444; padding-bottom: 5px;">Impressum</h3>
@@ -330,7 +359,7 @@
 
     <div id="reservationModal" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">&times;</span>
+            <span class="close-button" onclick="closeModal()">×</span>
             <h3>Reservierung per WhatsApp</h3>
             <p>Bitte füllen Sie die Felder aus. Wir senden Ihnen eine vorbereitete WhatsApp-Nachricht zur Bestätigung.</p>
             <form id="whatsappForm" onsubmit="sendWhatsAppReservation(event)">
@@ -362,25 +391,33 @@
     </div>
 
     <script>
-        // WhatsApp Zielnummer (ohne +, ohne 00, mit Ländercode 49)
+        // ****************************************************
+        // KORREKTE WHATSAPP-NUMMER BESTÄTIGT: 01739000432 -> 491739000432
+        // ****************************************************
         const WHATSAPP_NUMBER = "491739000432"; 
 
         // ----------------------------------------------------
         // 10.1 WHATSAPP RESERVIERUNGS-FUNKTION
         // ----------------------------------------------------
         function sendWhatsAppReservation(event) {
-            event.preventDefault(); // Verhindert das Standard-Formular-Senden
+            event.preventDefault(); 
 
             const name = document.getElementById('resName').value;
             const date = document.getElementById('resDate').value;
             const time = document.getElementById('resTime').value;
             const guests = document.getElementById('resGuests').value;
+            
+            // Gültigkeitsprüfung (sollte HTML5 'required' übernehmen, dient als Fallback)
+            if (!name || !date || !time || !guests) {
+                 alert("Bitte füllen Sie alle markierten Felder aus, um die Reservierung zu senden.");
+                 return;
+            }
 
             // Formatiert das Datum in das deutsche Format TT.MM.JJJJ
-            const dateObj = new Date(date);
-            const formattedDate = dateObj.toLocaleDateString('de-DE');
+            const dateParts = date.split('-'); // [YYYY, MM, DD]
+            const formattedDate = dateParts[2] + '.' + dateParts[1] + '.' + dateParts[0];
 
-            // Der Text, der als vorausgefüllte Nachricht an Bernie gesendet wird
+            // Der Text, der als vorausgefüllte Nachricht gesendet wird
             const message = `Hallo Bernie's Keller Team,\n\nich möchte einen Tisch reservieren:\n\n👤 Name: ${name}\n🗓️ Datum: ${formattedDate}\n⏰ Uhrzeit: ${time} Uhr\n👨‍👩‍👧‍👦 Personen: ${guests}\n\nVielen Dank!`;
 
             // URL-Encoding der Nachricht
@@ -420,25 +457,22 @@
         const header = document.getElementById('main-header');
         
         window.addEventListener('scroll', () => {
-             // Lässt den Header beim Scrollen schrumpfen
-            header.classList.toggle('scrolled', window.scrollY > 50);
+             header.classList.toggle('scrolled', window.scrollY > 50);
         });
         
         function toggleMenu() {
             const nav = document.getElementById('main-nav');
             header.classList.toggle('nav-open');
-            // Blendet Navigation auf Mobilgeräten ein/aus
-            if (header.classList.contains('nav-open')) {
-                nav.style.display = 'flex';
-            } else if (window.innerWidth <= 1000) {
-                nav.style.display = 'none';
+            if (window.innerWidth <= 1000) {
+                nav.style.display = header.classList.contains('nav-open') ? 'flex' : 'none';
             }
         }
         
-        // Schließt Menü nach Klick auf Mobil
         document.querySelectorAll('#main-nav a').forEach(a => a.addEventListener('click', () => {
             if (window.innerWidth <= 1000) {
-                toggleMenu(); 
+                if (header.classList.contains('nav-open')) {
+                    toggleMenu(); 
+                }
             }
         }));
 
@@ -455,7 +489,6 @@
             });
         }, { threshold: 0.15 });
 
-        // Elemente nur bei Laden starten lassen, der Rest wird vom Observer übernommen
         window.addEventListener('load', () => {
              elementsToAnimate.forEach(element => {
                 observer.observe(element);
