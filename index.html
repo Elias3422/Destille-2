@@ -3,203 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Destille Bernie's Keller – Mosel Tradition & Moderne Küche</title>
+    <title>Destille Bernie's Keller – Mosel Genuss & Exklusivität</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
         /* ================================================= */
-        /* 1. GLOBALE STILE & TYPOGRAFIE (STABILISIERT)      */
+        /* 1. GLOBALE STILE, PRELOADER & TYPOGRAFIE          */
         /* ================================================= */
         :root {
-            --color-primary: #4A1C14; /* Tiefes Bordeaux / Keller-Braun */
-            --color-secondary: #B87333; /* Kupfer / Altgold-Akzent */
-            --color-accent: #E84A5F; /* Modernes Akzentrot */
-            --color-text: #333;
-            --color-bg-light: #F9F7F5; /* Cremeweiß */
-            --font-display: 'Cormorant Garamond', serif; 
-            --font-body: 'Montserrat', sans-serif; 
+            /* BRANDING PALETTE */
+            --color-dark: #2C0703; /* Hintergrund/Footer (Dunkler Keller) */
+            --color-primary: #5A2E1D; /* Hauptfarbe (Rustikales Braun) */
+            --color-secondary: #C39D5C; /* Altgold/Kupfer (Eleganz) */
+            --color-accent: #A83A49; /* Akzentrot (Wärme/Wein) */
+            --color-light: #FBF9F6; /* Heller Hintergrund */
+            
+            /* FONTS */
+            --font-serif: 'Lora', serif; 
+            --font-sans: 'Poppins', sans-serif; 
+            --header-height: 80px;
         }
 
         html { scroll-behavior: smooth; }
         body { 
-            margin: 0; padding: 0; font-family: var(--font-body); color: var(--color-text); line-height: 1.6; 
-            background-color: white; 
-            /* Kritische Einblend-Logik wurde ins JavaScript verschoben, 
-               um den "weißen Bildschirm" bei fehlerhaftem Laden zu verhindern. 
-               Der Körper startet sichtbar. */
-        }
-        
-        /* Die Einblend-Klasse wird von JS hinzugefügt */
-        .fade-in-body {
-            animation: fadeIn 1s ease-in forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            margin: 0; padding: 0; font-family: var(--font-sans); color: var(--color-dark); line-height: 1.6; 
+            background-color: white; overflow-x: hidden;
         }
 
-        h1, h2, h3, h4 { font-family: var(--font-display); color: var(--color-primary); margin-bottom: 0.5em; }
-        h2 { font-size: 3em; font-weight: 700; margin-bottom: 15px; }
-        p { font-family: var(--font-body); font-size: 1.1em; }
+        /* Preloader */
+        #preloader {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            background: white; z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+        .loader {
+            border: 5px solid var(--color-light); border-top: 5px solid var(--color-accent);
+            border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .hidden { opacity: 0; pointer-events: none; }
+
+        h1, h2, h3, h4 { font-family: var(--font-serif); color: var(--color-primary); margin-bottom: 0.5em; }
+        h2 { font-size: 3.5em; font-weight: 700; margin-bottom: 20px; }
         a { text-decoration: none; color: var(--color-accent); transition: color 0.3s; }
-        a:hover { color: var(--color-primary); }
 
         /* ================================================= */
-        /* 2. STICKY HEADER & NAVIGATION                     */
+        /* 2. STICKY HEADER & MEGA-MENÜ                      */
         /* ================================================= */
         header {
-            background: rgba(255, 255, 255, 0.98); 
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 90%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease-in-out;
+            background: rgba(255, 255, 255, 0.98); height: var(--header-height);
+            padding: 0 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            position: fixed; width: 90%; top: 0; z-index: 1000;
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05); transition: all 0.3s ease-in-out;
         }
-        header.scrolled { padding: 10px 5%; } 
-        .logo h1 { margin: 0; font-size: 1.8em; color: var(--color-primary); transition: font-size 0.3s; }
-        header.scrolled .logo h1 { font-size: 1.5em; }
-        nav a { color: var(--color-primary); margin: 0 15px; padding: 5px 0; position: relative; font-weight: 600; }
-        nav a:hover, nav a.active { color: var(--color-accent); }
+        header.scrolled { height: 60px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+        .logo h1 { margin: 0; font-size: 2em; color: var(--color-primary); }
+
+        nav a { 
+            color: var(--color-primary); margin: 0 15px; padding: 5px 0; font-weight: 600;
+            position: relative; transition: color 0.3s;
+        }
+        nav a:hover { color: var(--color-accent); }
+        nav a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 50%;
+            background-color: var(--color-accent); transition: all 0.3s ease-in-out; transform: translateX(-50%);
+        }
+        nav a:hover::after { width: 100%; }
+
         .contact-buttons a {
-            background: var(--color-accent); color: white; padding: 8px 15px; border-radius: 4px; 
-            margin-left: 10px; display: inline-flex; align-items: center; transition: background-color 0.3s; font-size: 0.9em;
+            background: var(--color-secondary); color: white; padding: 10px 18px; border-radius: 50px;
+            margin-left: 10px; font-weight: 600; font-size: 0.9em; transition: background-color 0.3s;
         }
         .contact-buttons a:hover { background-color: var(--color-primary); }
         .menu-toggle { display: none; font-size: 1.8em; color: var(--color-primary); cursor: pointer; }
 
         /* ================================================= */
-        /* 3. HERO & KEY FACTS                               */
+        /* 3. HERO MIT PARALLAX EFFEKT                       */
         /* ================================================= */
         .hero {
-            padding-top: 80px; text-align: center;
-            background: linear-gradient(rgba(74, 28, 20, 0.6), rgba(74, 28, 20, 0.8)), url('[FOTO: URL des besten Restaurantfotos]'); /* FOTO HIER ERSETZEN */
-            background-size: cover; background-position: center; color: white; min-height: 85vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;
+            height: 90vh; text-align: center; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        .hero-content h2 { font-size: 4em; color: white; margin-bottom: 20px; line-height: 1.1; }
-        .hero-content p { font-size: 1.8em; color: #ccc; margin-bottom: 40px; font-family: var(--font-display); }
+        .parallax-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('[FOTO: URL des besten Restaurantfotos]'); /* FOTO HIER ERSETZEN */
+            background-size: cover; background-position: center; z-index: 1;
+        }
+        .hero-content { z-index: 2; color: white; padding-top: var(--header-height); }
+        .hero-content h2 { font-size: 5em; color: white; margin-bottom: 20px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); }
+        .hero-content p { font-size: 1.5em; color: var(--color-secondary); margin-bottom: 40px; }
 
         .cta-button {
-            background: var(--color-accent); color: white; padding: 15px 40px; border-radius: 50px; 
-            font-weight: 700; font-size: 1.1em; letter-spacing: 1px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, background-color 0.3s;
+            background: var(--color-accent); color: white; padding: 15px 45px; border-radius: 5px;
+            font-weight: 700; font-size: 1.1em; letter-spacing: 1px; transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-        .cta-button:hover { background-color: #d13a4e; transform: translateY(-3px); }
-
-        /* Key Facts Bar */
-        .key-facts {
-            position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 50%); 
-            width: 90%; max-width: 1200px; background: white; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            border-radius: 8px; display: flex; justify-content: space-around; padding: 20px 0; text-align: center; z-index: 10;
+        .cta-button:hover { background-color: #92303c; transform: translateY(-3px); }
+        
+        /* Key Facts Grid (Modernes Layout) */
+        .key-facts-grid {
+            margin: -50px auto 0; max-width: 1200px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+            z-index: 10; position: relative;
         }
-        .fact-item { flex: 1; padding: 0 15px; border-right: 1px solid #eee; }
-        .fact-item:last-child { border-right: none; }
-        .fact-item i { font-size: 1.8em; color: var(--color-secondary); margin-bottom: 5px; }
-        .fact-item strong { display: block; font-size: 1.1em; color: var(--color-primary); }
+        .fact-item {
+            background: white; border-radius: 8px; padding: 30px 15px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .fact-item:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); }
+        .fact-item i { font-size: 2.2em; color: var(--color-accent); margin-bottom: 10px; }
+        .fact-item strong { display: block; font-size: 1.2em; color: var(--color-primary); margin-bottom: 5px; }
 
         /* ================================================= */
         /* 4. SEKTIONEN & ANIMATIONEN                        */
         /* ================================================= */
         .section { padding: 120px 5% 80px; text-align: center; overflow: hidden; position: relative; }
-        .section:nth-child(even) { background: var(--color-bg-light); }
+        .section:nth-child(even) { background: var(--color-light); }
 
-        /* Animationen */
+        /* Animationen (verbessert) */
         .animate-on-scroll {
-            opacity: 0; transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            opacity: 0; transform: translateY(50px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth Cubic-Bezier */
         }
-        .animate-on-scroll.in-view {
-            opacity: 1; transform: translateY(0);
-        }
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
+        .animate-on-scroll.in-view { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; } .delay-3 { transition-delay: 0.3s; }
 
         /* Carousel Styling */
-        .carousel-container { max-width: 900px; margin: 40px auto; position: relative; overflow: hidden; border-radius: 8px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); }
-        .carousel-track { display: flex; transition: transform 0.5s ease-in-out; }
-        .carousel-slide {
-            min-width: 100%; height: 450px; background-size: cover; background-position: center;
-            display: flex; align-items: center; justify-content: center; color: white;
-            font-size: 2em; font-family: var(--font-display); text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-        }
-        .slide-nav button {
-            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5);
-            color: white; border: none; padding: 15px; cursor: pointer; z-index: 5; font-size: 1.5em; transition: background 0.3s;
-        }
-        .slide-nav button:hover { background: rgba(0, 0, 0, 0.8); }
-        .slide-nav .prev { left: 0; border-radius: 0 5px 5px 0; }
-        .slide-nav .next { right: 0; border-radius: 5px 0 0 5px; }
+        .carousel-container { max-width: 1000px; margin: 40px auto; }
+        .carousel-slide { background-color: var(--color-primary); } /* Hintergrundfarbe, falls Bild nicht lädt */
 
-        /* Mitarbeiter Karten */
-        .staff-card-grid { display: flex; justify-content: center; gap: 30px; margin-top: 40px; }
-        .staff-card { width: 280px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; text-align: center; transition: box-shadow 0.3s; }
-        .staff-card:hover { box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
-        .staff-card img { width: 100%; height: 300px; object-fit: cover; }
-        .staff-info { padding: 15px; }
-        .staff-info h4 { margin: 5px 0; color: var(--color-accent); }
-        .staff-info p { font-size: 0.95em; color: #777; margin: 0; }
-
-        /* Speisekarte Links */
-        .menu-links a {
-            border: 1px solid var(--color-primary); padding: 10px 20px; border-radius: 5px; margin: 10px;
-            display: inline-block; transition: background 0.3s;
+        /* Mitarbeiter Grid */
+        .staff-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1000px; margin: 40px auto; }
+        .staff-card { background: white; border-radius: 8px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); }
+        .staff-card img { height: 350px; }
+        .staff-info { padding: 20px; }
+        .staff-info h4 { font-family: var(--font-serif); color: var(--color-primary); }
+        .staff-info p { font-weight: 300; color: #777; }
+        
+        /* Modale (Reservierungs-Popup) */
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
+            width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.8);
         }
-        .menu-links a:hover { background: var(--color-primary); color: white; }
+        .modal-content {
+            background-color: var(--color-light); margin: 5% auto; padding: 40px; 
+            border-radius: 10px; width: 90%; max-width: 600px; position: relative;
+            animation: fadeIn 0.3s;
+        }
+        .close-button {
+            color: var(--color-primary); float: right; font-size: 28px; font-weight: bold;
+            transition: color 0.3s; cursor: pointer;
+        }
+        .close-button:hover, .close-button:focus { color: var(--color-accent); }
+        .modal-content h3 { border-bottom: 2px solid var(--color-secondary); padding-bottom: 10px; }
+        .modal-content form input, .modal-content form select {
+            width: 100%; padding: 12px; margin: 8px 0 20px 0; display: inline-block; 
+            border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+        }
+        .modal-content .submit-btn {
+            background-color: var(--color-accent); color: white; padding: 14px 20px;
+            border: none; cursor: pointer; width: 100%; font-size: 1.1em;
+        }
+        .modal-content .submit-btn:hover { background-color: var(--color-primary); }
 
         /* ================================================= */
-        /* 5. FOOTER & IMPRESSUM                             */
+        /* 5. FOOTER (Dunkler, eleganter Keller-Stil)        */
         /* ================================================= */
         footer {
-            background: var(--color-primary); color: #ddd; padding: 50px 5% 20px; text-align: center;
+            background: var(--color-dark); color: #ddd; padding: 50px 5% 20px; text-align: center;
         }
         footer .footer-note { 
-            font-size: 1.4em; font-family: var(--font-display); color: white; margin-bottom: 30px;
-            border-bottom: 2px solid var(--color-secondary); padding-bottom: 10px; display: inline-block; max-width: 600px;
+            font-size: 1.5em; font-family: var(--font-serif); color: var(--color-secondary); 
+            margin-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px;
         }
-        footer .footer-nav a { color: #ccc; margin: 0 15px; }
+        footer .footer-nav a { color: #aaa; margin: 0 15px; }
         footer .footer-nav a:hover { color: var(--color-secondary); }
 
         .impressum-content { 
-            background: rgba(255, 255, 255, 0.05); padding: 25px; margin-top: 40px; border-radius: 5px; 
+            background: rgba(255, 255, 255, 0.03); padding: 25px; margin-top: 40px; border-radius: 5px; 
             text-align: left; max-width: 900px; margin-left: auto; margin-right: auto; font-size: 0.9em;
         }
         .impressum-content h3 { color: var(--color-secondary); margin-top: 0; }
-        .impressum-content p { margin: 8px 0; color: #ddd; }
+        .impressum-content p { margin: 8px 0; color: #ccc; }
 
         /* ================================================= */
         /* 6. RESPONSIVE DESIGN                              */
         /* ================================================= */
         @media (max-width: 1000px) {
-            h2 { font-size: 2em; }
-            .hero-content h2 { font-size: 3em; }
-            .hero-content p { font-size: 1.4em; }
-
+            h2 { font-size: 2.5em; }
+            .hero-content h2 { font-size: 3.5em; }
+            .hero-content p { font-size: 1.2em; }
+            
             /* Mobile Navigation */
-            nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: white; box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05); }
+            nav { display: none; flex-direction: column; position: absolute; top: var(--header-height); left: 0; width: 100%; background: white; box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05); }
             nav a { padding: 15px 5%; margin: 0; border-bottom: 1px solid #eee; }
             .contact-buttons { display: none; } 
             .menu-toggle { display: block; }
             header.nav-open nav { display: flex; }
 
             /* Key Facts Mobile Layout */
-            .key-facts { flex-direction: column; position: static; transform: none; width: 100%; border-radius: 0; margin-top: 40px; padding: 20px 0; }
-            .fact-item { border-right: none; border-bottom: 1px solid #eee; padding: 15px 0; }
-            .fact-item:last-child { border-bottom: none; }
+            .key-facts-grid { grid-template-columns: 1fr 1fr; margin-top: 0; }
+            .fact-item { margin: 10px 0; }
             .section { padding: 80px 5% 50px; }
-            .staff-card-grid { flex-direction: column; align-items: center; }
-            .staff-card { width: 90%; }
+            .staff-card-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 
 <body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
     <script src="https://fast.wistia.com/player.js" async></script>
     <script src="https://fast.wistia.com/embed/j1b0vbritr.js" async type="module"></script>
     <script src="https://elfsightcdn.com/platform.js" async></script>
@@ -214,60 +234,60 @@
         </div>
 
         <nav id="main-nav">
-            <a href="#start">Start</a>
-            <a href="#facts">Infos</a>
-            <a href="#restaurant">Impressionen</a>
-            <a href="#speisekarte">Speisekarte</a>
-            <a href="#bewertungen">Bewertungen</a>
-            <a href="#kontakt">Reservierung</a>
+            <a href="#start">Home</a>
+            <a href="#restaurant">Atmosphäre</a>
+            <a href="#speisekarte">Kulinarik</a>
+            <a href="#bewertungen">Stimmen</a>
+            <a href="#" onclick="openModal(); return false;">Tisch Buchen</a>
         </nav>
 
         <div class="contact-buttons">
             <a href="tel:065418689841"><i class="fas fa-phone"></i> Anrufen</a>
-            <a href="https://wa.me/491739000432" target="_blank"><i class="fab fa-whatsapp"></i> Chat</a>
+            <a href="#" onclick="openModal(); return false;"><i class="fas fa-calendar-alt"></i> Reservieren</a>
         </div>
     </header>
 
     <section id="start" class="hero">
+        <div class="parallax-bg" id="parallax-bg"></div>
         <div class="hero-content animate-on-scroll">
-            <h2>Tradition trifft Moderne. Willkommen in Bernie's Keller.</h2>
-            <p>Wo Mosel-Genuss und herzliche Gastfreundschaft zuhause sind.</p>
-            <a href="#kontakt" class="cta-button">TISCH JETZT RESERVIEREN</a>
+            <h2>Die exklusive Kellerküche an der Mosel.</h2>
+            <p>Wo traditionelle Brennkunst auf moderne Gastronomie trifft.</p>
+            <a href="#" onclick="openModal(); return false;" class="cta-button">Ihren Abend planen</a>
         </div>
 
-        <div id="facts" class="key-facts animate-on-scroll delay-2">
-            <div class="fact-item">
+        <div id="facts" class="key-facts-grid">
+            <div class="fact-item animate-on-scroll delay-1">
                 <i class="fas fa-map-marker-alt"></i>
-                <strong>Standort</strong>
-                <p>54536 Kröv, Mosel</p>
+                <strong>Anfahrt</strong>
+                <p>54536 Kröv. Zentrale Lage.</p>
             </div>
-            <div class="fact-item">
+            <div class="fact-item animate-on-scroll delay-2">
                 <i class="fas fa-clock"></i>
                 <strong>Öffnungszeiten</strong>
-                <p>[PLATZHALTER: Mo-So, z.B. 17:00 – 22:00 Uhr]</p>
+                <p>[PLATZHALTER: Di – Sa, 17:30 – 23:00 Uhr]</p>
             </div>
-            <div class="fact-item">
+            <div class="fact-item animate-on-scroll delay-3">
                 <i class="fas fa-utensils"></i>
-                <strong>Küche</strong>
-                <p>Deutsch/Regional</p>
+                <strong>Menü</strong>
+                <p>Saisonal & Regional verfeinert</p>
             </div>
-            <div class="fact-item">
-                <i class="fas fa-phone-alt"></i>
-                <strong>Kontakt</strong>
-                <p><a href="tel:065418689841" style="color: var(--color-text);">06541 8689841</a></p>
+            <div class="fact-item animate-on-scroll delay-4">
+                <i class="fas fa-wine-bottle"></i>
+                <strong>Weinbar</strong>
+                <p>Eigene Destillate & Moselweine</p>
             </div>
         </div>
     </section>
 
     <section id="restaurant" class="section">
-        <h2 class="animate-on-scroll">Einblick in unser Zuhause</h2>
-        <p class="animate-on-scroll delay-1">Erleben Sie die Atmosphäre, die unsere Gäste so lieben.</p>
+        <h2 class="animate-on-scroll">Atmosphäre zum Verweilen</h2>
+        <p class="animate-on-scroll delay-1">Lassen Sie sich von unserem rustikal-eleganten Ambiente verzaubern.</p>
         
         <div class="carousel-container animate-on-scroll delay-2">
             <div class="carousel-track" id="carousel-track">
-                <div class="carousel-slide" style="background-image: url('[FOTO 1: URL eines Tisches/Deko]');">Gemütliche Ecken</div>
-                <div class="carousel-slide" style="background-image: url('[FOTO 2: URL einer Speise/Wein]');">Kulinarische Höhepunkte</div>
-                <div class="carousel-slide" style="background-image: url('[FOTO 3: URL vom Keller/Rustikal]');">Historisches Ambiente</div>
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('[FOTO 1: URL eines Tisches/Deko]');">Gemütliche Ecken</div>
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('[FOTO 2: URL einer Speise/Wein]');">Kulinarische Höhepunkte</div>
+                <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('[FOTO 3: URL vom Keller/Rustikal]');">Historisches Ambiente</div>
             </div>
             <div class="slide-nav">
                 <button class="prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
@@ -275,47 +295,47 @@
             </div>
         </div>
 
-        <div style="margin-top: 50px;">
-            <h3 class="animate-on-scroll">Lernen Sie unser Team kennen</h3>
-            <p class="animate-on-scroll delay-1">Herzlichkeit und Professionalität – dafür stehen wir.</p>
+        <div style="margin-top: 80px;">
+            <h3 class="animate-on-scroll">Das Gesicht des Genusses</h3>
+            <p class="animate-on-scroll delay-1">Jedes Gericht, jeder Service-Moment – ein Ausdruck unserer Leidenschaft.</p>
             <div class="staff-card-grid">
-                <div class="staff-card animate-on-scroll delay-1">
+                <div class="staff-card animate-on-scroll delay-2">
                     <img src="[FOTO: URL Mitarbeiter 1]" alt="Foto Mitarbeiter 1">
                     <div class="staff-info">
                         <h4>Bernie Keller</h4>
                         <p>Inhaber & Küchenchef</p>
                     </div>
                 </div>
-                <div class="staff-card animate-on-scroll delay-2">
+                <div class="staff-card animate-on-scroll delay-3">
                     <img src="[FOTO: URL Mitarbeiter 2]" alt="Foto Mitarbeiter 2">
                     <div class="staff-info">
                         <h4>[Name Service]</h4>
-                        <p>Restaurantleitung & Sommelier</p>
+                        <p>Restaurantleitung & Weinexperte</p>
                     </div>
                 </div>
-                <div class="staff-card animate-on-scroll delay-3">
+                <div class="staff-card animate-on-scroll delay-4">
                     <img src="[FOTO: URL Mitarbeiter 3]" alt="Foto Mitarbeiter 3">
                     <div class="staff-info">
                         <h4>[Name Bar]</h4>
-                        <p>Bar & Empfang</p>
+                        <p>Chef Pâtissier & Destillat-Kreation</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="speisekarte" class="section animate-on-scroll" style="background: var(--color-bg-light);">
+    <section id="speisekarte" class="section animate-on-scroll" style="background: var(--color-light);">
         <h2>Unsere Kulinarik</h2>
-        <p class="animate-on-scroll delay-1">Frische Zutaten, liebevoll zubereitet. Entdecken Sie unsere Auswahl.</p>
+        <p class="animate-on-scroll delay-1">Klassische deutsche Küche neu interpretiert, kombiniert mit regionalen Destillaten.</p>
         
         <div class="menu-links animate-on-scroll delay-2">
-            <a href="[FOTO: URL Speisekarte 1]" target="_blank"><i class="fas fa-book-open"></i> Speisen</a>
-            <a href="[FOTO: URL Speisekarte 2]" target="_blank"><i class="fas fa-wine-bottle"></i> Getränke & Wein</a>
-            <a href="[PLATZHALTER: PDF-Link zur Speisekarte]" class="cta-button" style="background: var(--color-primary);"><i class="fas fa-download"></i> Speisekarte PDF</a>
+            <a href="[FOTO: URL Speisekarte 1]" target="_blank"><i class="fas fa-book-open"></i> Speisekarte</a>
+            <a href="[FOTO: URL Speisekarte 2]" target="_blank"><i class="fas fa-wine-bottle"></i> Wein & Destillate</a>
+            <a href="[PLATZHALTER: PDF-Link zur Speisekarte]" class="cta-button" style="background: var(--color-primary);"><i class="fas fa-download"></i> Menü (PDF)</a>
         </div>
 
         <div style="max-width: 700px; margin: 50px auto 0;">
-             <h3 class="animate-on-scroll">Unser Video-Portrait</h3>
+             <h3 class="animate-on-scroll">Unser kulinarisches Portrait</h3>
             <div style="position: relative; padding-top: 56.25%; height: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
                 <style>wistia-player[media-id='j1b0vbritr']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/j1b0vbritr/swatch'); display: block; filter: blur(5px); position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> 
                 <wistia-player media-id="j1b0vbritr" aspect="0.5576923076923077" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></wistia-player>
@@ -325,47 +345,38 @@
 
     <section id="bewertungen" class="section animate-on-scroll">
         <h2>Was unsere Gäste sagen</h2>
-        <p class="animate-on-scroll delay-1">Ihre Meinung ist uns wichtig – lesen Sie die neuesten Google-Bewertungen.</p>
+        <p class="animate-on-scroll delay-1">Exzellente Küche und herausragender Service – von Ihnen bestätigt.</p>
         <div style="max-width: 800px; margin: 30px auto;">
             <div class="elfsight-app-b418132b-5223-43b2-b58f-bebcc918cece" data-elfsight-app-lazy></div>
         </div>
     </section>
 
-    <section id="kontakt" class="section animate-on-scroll" style="background-color: var(--color-primary); color: white;">
-        <h2 style="color: white;">Reservieren Sie Ihren Tisch</h2>
+    <section id="kontakt-section" class="section animate-on-scroll" style="background-color: var(--color-dark); color: white;">
+        <h2 style="color: white;">Besuchen Sie uns</h2>
         <p class="animate-on-scroll delay-1" style="font-size: 1.4em; color: var(--color-secondary);">
-            Bitte reservieren Sie frühzeitig – wir freuen uns darauf, Sie zu verwöhnen!
+            Wir freuen uns auf Ihren Besuch. Jetzt mit wenigen Klicks reservieren.
         </p>
 
+        <a href="#" onclick="openModal(); return false;" class="cta-button" style="background: var(--color-accent); margin: 20px 0;"><i class="fas fa-calendar-check"></i> JETZT TISCH BUCHEN</a>
+
         <div style="max-width: 900px; margin: 40px auto;">
-            <h3 style="color: white;">So finden Sie uns:</h3>
+            <h3 style="color: white;">Ihre Anfahrt</h3>
             <div style="height: 400px; border-radius: 8px; overflow: hidden; margin-top: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
                 <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" 
                     src="[PLATZHALTER: AKTUELLE GOOGLE MAPS IFRAME URL]" allowfullscreen>
                 </iframe> 
             </div>
-            
-            <p style="margin-top: 10px; font-size: 0.8em; color: #aaa;">
-                <a href='https://www.wgglobal.de/Warensicherung_Einzelhandel.html' style="color: #aaa;">Warensicherungssysteme Einzelhandel</a>
-                <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=6dafd6b6fdbec64838e519dd3fa158c408b1f530'></script>
-            </p>
-        </div>
-
-        <div style="margin-top: 30px;">
-            <a href="tel:065418689841" class="cta-button" style="background: var(--color-secondary); margin: 10px;"><i class="fas fa-phone"></i> Anrufen: 06541 8689841</a>
-            <a href="https://wa.me/491739000432" target="_blank" class="cta-button" style="background: #25D366; margin: 10px;"><i class="fab fa-whatsapp"></i> WhatsApp Chat</a>
         </div>
     </section>
 
     <footer>
         <p class="footer-note">
-            "Als Ersteller dieser Webseite kann ich nur bestätigen: Das Essen hat mir hervorragend geschmeckt!"
+            "Ein Ort der Begegnung und des höchsten Genusses."
         </p>
 
         <nav class="footer-nav">
-            <a href="#start">Start</a>
-            <a href="#restaurant">Restaurant</a>
-            <a href="#speisekarte">Speisekarte</a>
+            <a href="#start">Home</a>
+            <a href="#kontakt-section">Anfahrt</a>
             <a href="#impressum-section">Impressum</a>
             <a href="#datenschutz">Datenschutz</a>
         </nav>
@@ -379,44 +390,81 @@
             <h3>Impressum (Angaben gemäß § 5 TMG)</h3>
             <p>
                 **Verantwortlich:** [VOLLSTÄNDIGER NAME/FIRMA]<br>
-                Robert-Schuman-Str. 71<br>
-                54536 Kröv
+                Robert-Schuman-Str. 71, 54536 Kröv
             </p>
             <p>
-                **Vertretungsberechtigt:** [VOLLSTÄNDIGER NAME]<br>
-                **Kontakt:**<br>
-                Telefon: 06541 8689841<br>
-                Mobil: +49 173 9000432<br>
-                E-Mail: [E-Mail-Adresse einfügen]
+                **Kontakt:** Telefon: 06541 8689841 | E-Mail: [E-Mail-Adresse einfügen]
             </p>
-            <p>[Weitere rechtlich notwendige Angaben (Umsatzsteuer-Identifikationsnummer, Registereinträge etc.)]</p>
         </div>
         
-        <p style="margin-top: 25px; font-size: 0.8em; color: #999;">&copy; 2025 Destille Bernie's Keller. Made with passion.</p>
+        <p style="margin-top: 25px; font-size: 0.8em; color: #999;">&copy; 2025 Destille Bernie's Keller. Alle Rechte vorbehalten.</p>
     </footer>
 
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3>Tisch reservieren</h3>
+            <p>Ihre Reservierungsanfrage wird direkt an unser Team gesendet.</p>
+            <form action="[PLATZHALTER: ZIEL-URL ODER E-MAIL-DIENST]" method="POST">
+                <label for="name">Name*</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="date">Datum*</label>
+                <input type="date" id="date" name="date" required min="2025-01-01"> <label for="time">Uhrzeit*</label>
+                <input type="time" id="time" name="time" required min="17:30" max="21:00" step="900">
+
+                <label for="guests">Anzahl Personen*</label>
+                <select id="guests" name="guests" required>
+                    <option value="1">1 Person</option>
+                    <option value="2">2 Personen</option>
+                    <option value="3">3 Personen</option>
+                    <option value="4" selected>4 Personen</option>
+                    <option value="5">5 Personen</option>
+                    <option value="6">6+ Personen (Bitte anrufen)</option>
+                </select>
+
+                <label for="phone">Telefon/Mobil*</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <button type="submit" class="submit-btn">Reservierung verbindlich anfragen</button>
+            </form>
+        </div>
+    </div>
+
+
     <script>
-        // 8.1 KRITISCHE KORREKTUR: FADE-IN FÜR BODY SICHERSTELLEN
-        document.addEventListener('DOMContentLoaded', () => {
-             // Fügt die Klasse hinzu, sobald das DOM geladen ist
-            document.body.classList.add('fade-in-body'); 
+        // 9.1 Preloader & Initialisierung (Verhindert weißen Bildschirm)
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            // Blendet den Ladebildschirm aus
+            preloader.classList.add('hidden');
+            // Startet die Hauptanimationen
+            document.body.style.overflow = 'auto'; // Erlaubt Scrolling
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+            moveSlide(0);
         });
 
-
-        // 8.2 Sticky Header Logik (Schrumpfen beim Scrollen)
+        // 9.2 Parallax Effekt für den Hero-Bereich
+        const parallaxBg = document.getElementById('parallax-bg');
+        if (parallaxBg) {
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.pageYOffset;
+                // Bewegt den Hintergrund langsamer nach unten
+                parallaxBg.style.transform = `translateY(${scrollPosition * 0.5}px)`; 
+            });
+        }
+        
+        // 9.3 Sticky Header Logik (Schrumpfen beim Scrollen)
         const header = document.getElementById('main-header');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+            header.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // 8.3 Mobile Navigation Toggle
+        // 9.4 Mobile Navigation Toggle
         function toggleMenu() {
             header.classList.toggle('nav-open');
             const nav = document.getElementById('main-nav');
+            // Fügt das Style-Attribut nur bei Bedarf hinzu/entfernt es
             if (header.classList.contains('nav-open')) {
                 nav.style.display = 'flex';
             } else if (window.innerWidth <= 1000) {
@@ -424,24 +472,20 @@
             }
         }
         window.addEventListener('resize', () => {
-            const nav = document.getElementById('main-nav');
             if (window.innerWidth > 1000) {
-                nav.style.display = 'flex';
+                document.getElementById('main-nav').style.display = 'flex';
                 header.classList.remove('nav-open');
             } else if (!header.classList.contains('nav-open')) {
-                nav.style.display = 'none';
+                document.getElementById('main-nav').style.display = 'none';
             }
         });
         document.querySelectorAll('#main-nav a').forEach(a => a.addEventListener('click', () => {
             if (window.innerWidth <= 1000) {
-                toggleMenu();
+                toggleMenu(); // Schließt Menü nach Klick auf Mobil
             }
         }));
 
-        // 8.4 Intersection Observer (Animate On Scroll)
-        const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
-        const observerOptions = { root: null, threshold: 0.1 };
-
+        // 9.5 Intersection Observer (Animate On Scroll)
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -449,13 +493,10 @@
                     observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        elementsToAnimate.forEach(element => {
-            observer.observe(element);
-        });
 
-        // 8.5 Simple Carousel Logic
+        // 9.6 Simple Carousel Logic
         let slideIndex = 0;
         const track = document.getElementById('carousel-track');
         const slides = document.querySelectorAll('.carousel-slide');
@@ -468,21 +509,30 @@
             } else if (slideIndex < 0) {
                 slideIndex = totalSlides - 1;
             }
-            if(track) { // Zusätzliche Überprüfung, ob das Element existiert
+            if(track) {
                 track.style.transform = `translateX(-${slideIndex * 100}%)`;
             }
         }
-
         // Automatischer Wechsel
-        if(totalSlides > 1) { // Nur starten, wenn es mehr als 1 Slide gibt
-             setInterval(() => {
-                moveSlide(1);
-            }, 5000); 
+        if(totalSlides > 1) { 
+             setInterval(() => { moveSlide(1); }, 5000); 
         }
 
-        window.addEventListener('load', () => {
-            moveSlide(0);
-        });
+        // 9.7 Modal (Popup) Logik
+        const modal = document.getElementById('reservationModal');
+
+        function openModal() {
+            modal.style.display = "block";
+        }
+        function closeModal() {
+            modal.style.display = "none";
+        }
+        // Schließt das Modal, wenn außerhalb geklickt wird
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
     </script>
 </body>
 </html>
