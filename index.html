@@ -110,8 +110,6 @@
         }
         .animate-on-scroll.in-view { opacity: 1; transform: translateY(0); }
         
-        /* HIER KÖNNTEN SIE ZUKÜNFTIG delay-4 bis delay-25 hinzufügen, falls nötig */
-
         /* HIGHLIGHT BAR */
         .highlight-bar { background: var(--accent-color); color: white; padding: 30px 5%; margin: 50px 0; }
         .highlight-bar .cta-button { line-height: 1.2em; }
@@ -246,6 +244,7 @@
             <a href="#start">Start</a>
             <a href="#speisekarte">Kulinarik</a>
             <a href="#restaurant">Atmosphäre</a>
+            <a href="#" onclick="openFullGalleryModal(); return false;">Alle Bilder</a>
             <a href="#bewertungen">Stimmen</a>
             <a href="#" onclick="openModal(); return false;">Reservieren</a>
             <a href="#impressum-section">Impressum</a>
@@ -311,12 +310,7 @@
             
             <div class="image-placeholder animate-on-scroll delay-3" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/aussen-3.jpg');">Terrasse/Außenansicht</div>
             
-            <div class="image-placeholder cta-button animate-on-scroll delay-4" onclick="openFullGalleryModal()" style="background: var(--primary-color); cursor: pointer; height: 100px; line-height: 1.2em; border-radius: 5px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); width: 100%; min-width: 280px; max-width: 900px; margin: 30px auto; padding: 20px;">
-                <i class="fas fa-camera" style="margin-right: 10px;"></i>
-                Alle 25 Bilder anzeigen
             </div>
-            
-        </div>
         
         <h2 style="margin-top: 80px;" class="animate-on-scroll">Das Team von Bernie's Keller</h2>
         <p class="animate-on-scroll">Wir sind mit Herz und Seele für Sie da!</p>
@@ -519,7 +513,7 @@
         // 10.2 MODAL LOGIK
         // ----------------------------------------------------
         const modal = document.getElementById('reservationModal');
-        const fullGalleryModal = document.getElementById('fullGalleryModal'); // NEU: Galerie Modal
+        const fullGalleryModal = document.getElementById('fullGalleryModal'); // Galerie Modal
 
         function openModal() {
             modal.style.display = "block";
@@ -534,6 +528,14 @@
         // NEUE FUNKTIONEN FÜR DIE GROSSE GALERIE
         function openFullGalleryModal() {
             fullGalleryModal.style.display = "block";
+            
+            // Auf Mobilgeräten das Menü schließen, wenn die Galerie geöffnet wird
+            if (window.innerWidth <= 1000) {
+                 const header = document.getElementById('main-header');
+                 if (header.classList.contains('nav-open')) {
+                    toggleMenu(); 
+                 }
+            }
         }
         function closeFullGalleryModal() {
             fullGalleryModal.style.display = "none";
@@ -565,10 +567,19 @@
             }
         }
         
-        document.querySelectorAll('#main-nav a').forEach(a => a.addEventListener('click', () => {
+        document.querySelectorAll('#main-nav a').forEach(a => a.addEventListener('click', (event) => {
+            // Wenn der Link auf eine ID zeigt, soll die Seite scrollen
+            if (a.getAttribute('href') && a.getAttribute('href').startsWith('#')) {
+                // Link ist ein Anker (z.B. #impressum) -> normales Scrollen
+            } else {
+                // Link ist "Alle Bilder" oder "Reservieren" (öffnet Modal)
+                event.preventDefault(); // Verhindert das Standardverhalten des Links
+            }
+            
             if (window.innerWidth <= 1000) {
                 if (header.classList.contains('nav-open')) {
-                    toggleMenu(); 
+                    // Timeout nötig, damit der Klick verarbeitet wird, bevor das Menü schließt
+                    setTimeout(() => toggleMenu(), 100); 
                 }
             }
         }));
