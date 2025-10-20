@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Destille Bernie's Keller – Mosel Genuss & Direkte Reservierung</title>
+    <title>Restaurant Destille Bernie's Keller â€“ Mosel Genuss & Direkte Reservierung</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
+        /* [ ... VORHANDENES CSS WIRD HIER NICHT VERÃ„NDERT ... ] */
+        /* Nur zur Ãœbersichtlichkeit: Alle CSS-Ã„nderungen sind in den bestehenden BlÃ¶cken abgedeckt. */
+
         /* ==================================== */
         /* 1. GLOBALE STILE & TYPOGRAPHIE        */
         /* ==================================== */
@@ -52,13 +55,6 @@
         nav a:hover::after { width: 100%; left: 0; transform: translateX(0); }
 
         /* HEADER BUTTONS - Fix */
-        .contact-buttons { 
-            display: flex; 
-            align-items: center;
-            /* Ermöglicht Zeilenumbruch auf mobilen Geräten */
-            flex-wrap: wrap; 
-            justify-content: flex-end; 
-        }
         .contact-buttons a {
             background: var(--accent-color); color: white; padding: 8px 15px; border-radius: 25px;
             margin-left: 10px; 
@@ -110,7 +106,7 @@
         .section { padding: 100px 5%; text-align: center; overflow: hidden; }
         .section:nth-child(even) { background: var(--light-bg); }
 
-        /* Animation für Sektionen */
+        /* Animation fÃ¼r Sektionen */
         .animate-on-scroll {
             opacity: 0; transform: translateY(50px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -121,7 +117,7 @@
         .highlight-bar { background: var(--accent-color); color: white; padding: 30px 5%; margin: 50px 0; }
         .highlight-bar .cta-button { line-height: 1.2em; }
         
-        /* VIDEO CONTAINER (KORRIGIERT FÜR MP4) */
+        /* VIDEO CONTAINER (KORRIGIERT FÃœR MP4) */
         .video-container { 
             max-width: 900px; /* Optional: Maximale Breite festlegen */
             margin: 30px auto; /* Zentrieren des Videos */
@@ -135,7 +131,7 @@
             height: auto; 
         }
 
-        /* NEUER STIL FÜR SPEZIALITÄTEN-LISTE */
+        /* NEUER STIL FÃœR SPEZIALITÃ„TEN-LISTE */
         .specialties-list {
             display: flex;
             justify-content: center;
@@ -145,7 +141,7 @@
         }
 
         .specialty-item {
-            flex: 1 1 200px; /* Flexibel in der Größe */
+            flex: 1 1 200px; /* Flexibel in der GrÃ¶ÃŸe */
             max-width: 300px;
             padding: 20px;
             background: white;
@@ -167,13 +163,13 @@
             width: calc(33% - 20px); min-width: 280px; height: 250px; background: #ccc; border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); transition: transform 0.3s, box-shadow 0.3s;
             display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2em;
-            /* Wichtig für die Galerie-Platzhalter */
+            /* Wichtig fÃ¼r die Galerie-Platzhalter */
             background-size: cover !important; background-position: center !important;
         }
         
         .staff-card { 
             background: var(--primary-color); height: auto; padding-bottom: 15px; 
-            display: block; /* Ändert das Display-Verhalten für die Team-Karten */
+            display: block; /* Ã„ndert das Display-Verhalten fÃ¼r die Team-Karten */
             text-align: center;
         }
         .staff-card img {
@@ -206,7 +202,7 @@
         .social-icons { margin-top: 20px; }
         .social-icons a:hover { color: var(--accent-color); }
         
-        /* NEUER STIL FÜR LIVE-MUSIK SEKTION */
+        /* NEUER STIL FÃœR LIVE-MUSIK SEKTION */
         .live-music-box {
             background: var(--primary-color);
             color: white;
@@ -243,35 +239,20 @@
             .menu-toggle { display: block; }
             .nav-open nav { display: flex; }
             
-            /* Anpassung der mobilen Buttons im Header */
-            header { 
-                padding-bottom: 15px; /* Mehr Platz für Buttons untereinander */
-                align-items: flex-start; /* Logo oben links ausrichten */
-            }
-            .contact-buttons {
-                order: 3; /* Buttons unterhalb des Logos und des Menüs */
-                width: 100%;
-                margin-top: 10px; /* Abstand nach oben */
-                justify-content: space-around; /* Buttons gleichmäßig verteilen */
-            }
-            .contact-buttons a {
-                flex-grow: 1; /* Nehmen den verfügbaren Platz ein */
-                margin: 0 5px; /* Abstand zwischen den Buttons */
-                max-width: 45%; /* Begrenzung der Breite */
-            }
-
             .gallery-container { flex-direction: column; align-items: center; }
             .image-placeholder, .staff-card { width: 100%; min-width: auto; height: 200px; }
-            .staff-card { height: auto; } 
+            .staff-card { height: auto; } /* Passt sich besser an den Inhalt an */
             
             .section { padding: 60px 5%; }
             
+            /* GrÃ¶ÃŸerer Modal-Inhalt fÃ¼r die Galerie auf MobilgerÃ¤ten */
             .modal-content {
-                margin: 5% auto; 
+                margin: 5% auto; /* Mehr Platz oben/unten */
             }
             
+            /* Responsiveness fÃ¼r die SpezialitÃ¤ten-Liste */
             .specialty-item {
-                flex: 1 1 100%; 
+                flex: 1 1 100%; /* Auf MobilgerÃ¤ten volle Breite */
                 max-width: 100%;
             }
         }
@@ -285,7 +266,7 @@
             background-color: #fefefe; margin: 15% auto; padding: 30px; border: 1px solid #888;
             width: 90%; max-width: 500px; border-radius: 10px; position: relative;
         }
-        /* Style für das Galerie-Modal, damit es breiter ist */
+        /* Style fÃ¼r das Galerie-Modal, damit es breiter ist */
         #fullGalleryModal .modal-content {
             max-width: 90%;
             margin: 5% auto; /* Mehr Platz oben/unten */
@@ -306,6 +287,7 @@
 </head>
 
 <body>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
     
     <header id="main-header">
         <div class="logo">
@@ -319,9 +301,8 @@
         <nav id="main-nav">
             <a href="#start">Start</a>
             <a href="#speisekarte">Kulinarik</a>
-            <a href="#restaurant">Atmosphäre</a>
-            <a href="#veranstaltungen">Live Musik</a>
-            <a href="#" onclick="openFullGalleryModal(); return false;">Alle Bilder</a>
+            <a href="#restaurant">AtmosphÃ¤re</a>
+            <a href="#veranstaltungen">Live Musik</a> <a href="#" onclick="openFullGalleryModal(); return false;">Alle Bilder</a>
             <a href="#bewertungen">Stimmen</a>
             <a href="#" onclick="openModal(); return false;">Reservieren</a>
             <a href="#impressum-section">Impressum</a>
@@ -335,8 +316,8 @@
 
     <section id="start" class="hero">
         <div class="hero-content">
-            <h2>Genuss trifft Tradition – Ihr Keller-Erlebnis an der Mosel.</h2>
-            <p>"Momente des Genusses, geschaffen für Sie."</p>
+            <h2>Genuss trifft Tradition â€“ Ihr Keller-Erlebnis an der Mosel.</h2>
+            <p>"Momente des Genusses, geschaffen fÃ¼r Sie."</p>
             <a href="#" onclick="openModal(); return false;" class="cta-button">TISCH JETZT RESERVIEREN</a>
         </div>
     </section>
@@ -344,19 +325,19 @@
     <div class="highlight-bar animate-on-scroll">
         <p>Reservieren Sie schnell & unkompliziert per WhatsApp!</p>
         <a href="#" onclick="openModal(); return false;" class="cta-button" style="background: var(--primary-color); margin-top: 10px;">
-            <i class="fab fa-whatsapp"></i> Jetzt Reservierungsformular öffnen
+            <i class="fab fa-whatsapp"></i> Jetzt Reservierungsformular Ã¶ffnen
         </a>
     </div>
 
     <section id="speisekarte" class="section animate-on-scroll" style="background: var(--light-bg);">
-        <h2>Speisen & Getränke</h2>
-        <p class="animate-on-scroll">Frische, regionale Küche – von deftig bis fein.</p>
+        <h2>Speisen & GetrÃ¤nke</h2>
+        <p class="animate-on-scroll">Frische, regionale KÃ¼che â€“ von deftig bis fein.</p>
         
         <div class="specialties-list animate-on-scroll">
             <div class="specialty-item">
                 <i class="fas fa-drumstick-bite"></i>
                 <h4>Deftiges & Schnitzel</h4>
-                <p>Klassisch deutsche Küche mit hervorragenden Schnitzelvariationen.</p>
+                <p>Klassisch deutsche KÃ¼che mit hervorragenden Schnitzelvariationen.</p>
             </div>
             <div class="specialty-item">
                 <i class="fas fa-utensils"></i>
@@ -374,7 +355,7 @@
             
             <a href="./bilder/speisekarte-2.jpg" class="image-placeholder animate-on-scroll delay-2" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./bilder/speisekarte-2.jpg'); background-size: cover;">Speisekarte 2 (Hauptgerichte)</a>
             
-            <a href="./bilder/speisekarte-3.jpg" class="image-placeholder animate-on-scroll delay-3" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./bilder/speisekarte-3.jpg'); background-size: cover;">Speisekarte 3 (Getränke/Dessert)</a>
+            <a href="./bilder/speisekarte-3.jpg" class="image-placeholder animate-on-scroll delay-3" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('./bilder/speisekarte-3.jpg'); background-size: cover;">Speisekarte 3 (GetrÃ¤nke/Dessert)</a>
         </div>
         <p style="margin-top: 30px;">
             <a href="./dokumente/speisekarte.pdf" class="cta-button" style="background: var(--primary-color);">
@@ -385,46 +366,44 @@
 
     <section class="section animate-on-scroll">
         <h2>Ein Blick in unsere Destille</h2>
-        <p>Sehen Sie, wie unsere Spezialitäten entstehen – die Kunst des Brennens.</p>
+        <p>Sehen Sie, wie unsere SpezialitÃ¤ten entstehen â€“ die Kunst des Brennens.</p>
         
         <div class="video-container">
             <video controls playsinline preload="metadata" poster="./bilder/video-vorschaubild.jpg">
                 <source src="./videos/Restaurant.mp4" type="video/mp4">
                 
-                Ihr Browser unterstützt das Video-Tag leider nicht.
+                Ihr Browser unterstÃ¼tzt das Video-Tag leider nicht.
             </video>
         </div>
     </section>
 
     <section id="restaurant" class="section animate-on-scroll" style="background: var(--light-bg);">
-        <h2>Unsere Atmosphäre & Außenterrasse</h2>
-        <p class="animate-on-scroll">Authentische Gemütlichkeit, die zum Verweilen einlädt.</p>
+        <h2>Unsere AtmosphÃ¤re & AuÃŸenterrasse</h2> <p class="animate-on-scroll">Authentische GemÃ¼tlichkeit, die zum Verweilen einlÃ¤dt.</p>
         
         <div class="animate-on-scroll" style="max-width: 800px; margin: 0 auto 50px;">
             <p style="font-size: 1.3em; font-family: var(--font-serif); color: var(--accent-color);">
-                Genießen Sie an warmen Tagen die **frische Moselluft** auf unserer gemütlichen **Außenterrasse**.
+                GenieÃŸen Sie an warmen Tagen die **frische Moselluft** auf unserer gemÃ¼tlichen **AuÃŸenterrasse**.
             </p>
             <p>
-                Der perfekte Ort für einen Aperitif oder ein Abendessen unter freiem Himmel, 
-                umgeben von der idyllischen Atmosphäre Krövs.
+                Der perfekte Ort fÃ¼r einen Aperitif oder ein Abendessen unter freiem Himmel, 
+                umgeben von der idyllischen AtmosphÃ¤re KrÃ¶vs.
             </p>
         </div>
-        
         <div class="gallery-container">
             <div class="image-placeholder animate-on-scroll delay-1" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/innenansicht-1.jpg');">Innenansicht 1</div>
             
-            <div class="image-placeholder animate-on-scroll delay-2" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/Küche-2.jpg');">Küche</div>
+            <div class="image-placeholder animate-on-scroll delay-2" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/KÃ¼che-2.jpg');">KÃ¼che</div>
             
-            <div class="image-placeholder animate-on-scroll delay-3" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/aussen-3.jpg');">Terrasse/Außenansicht</div>
+            <div class="image-placeholder animate-on-scroll delay-3" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/aussen-3.jpg');">Terrasse/AuÃŸenansicht</div>
         </div>
         
         <h2 style="margin-top: 80px;" class="animate-on-scroll">Das Team von Bernie's Keller</h2>
-        <p class="animate-on-scroll">Wir sind mit Herz und Seele für Sie da!</p>
+        <p class="animate-on-scroll">Wir sind mit Herz und Seele fÃ¼r Sie da!</p>
         <div class="gallery-container">
             <div class="staff-card animate-on-scroll delay-1">
                 <img src="./bilder/chef.jpg" alt="Foto Bernie Keller">
                 <h4>Bernie Keller (Der Chef)</h4>
-                <p>Küche & Gastgeber</p>
+                <p>KÃ¼che & Gastgeber</p>
             </div>
             <div class="staff-card animate-on-scroll delay-2">
                 <img src="./bilder/mitarbeiter-service.jpg" alt="Foto Mitarbeiter Service">
@@ -432,15 +411,15 @@
                 <p>Service & Weinberatung</p>
             </div>
             <div class="staff-card animate-on-scroll delay-3">
-                <img src="./bilder/mitarbeiter-kueche.jpg" alt="Foto Mitarbeiter Küche">
-                <h4>[Name Küche]</h4>
-                <p>Küchen-Team</p>
+                <img src="./bilder/mitarbeiter-kueche.jpg" alt="Foto Mitarbeiter KÃ¼che">
+                <h4>[Name KÃ¼che]</h4>
+                <p>KÃ¼chen-Team</p>
             </div>
         </div>
     </section>
 
     <section id="veranstaltungen" class="section animate-on-scroll" style="background: white;">
-        <h2>Live Musik in Bernie's Keller 🎶</h2>
+        <h2>Live Musik in Bernie's Keller ðŸŽ¶</h2>
         <p class="animate-on-scroll">Erleben Sie unvergessliche Abende in historischem Ambiente.</p>
         
         <div class="live-music-box animate-on-scroll">
@@ -449,14 +428,14 @@
                 Jeden **Freitag, Samstag und Sonntag**
             </p>
             <p>
-                Tauchen Sie ein in die urige Atmosphäre unseres Kellers und genießen Sie bei gutem Wein und Speis Live-Unterhaltung. Ein Highlight für Ihren Mosel-Besuch!
+                Tauchen Sie ein in die urige AtmosphÃ¤re unseres Kellers und genieÃŸen Sie bei gutem Wein und Speis Live-Unterhaltung. Ein Highlight fÃ¼r Ihren Mosel-Besuch!
             </p>
         </div>
         
-        <a href="#" onclick="openModal(); return false;" class="cta-button">Tisch für den nächsten Musik-Abend reservieren</a>
+        <a href="#" onclick="openModal(); return false;" class="cta-button">Tisch fÃ¼r den nÃ¤chsten Musik-Abend reservieren</a>
     </section>
     <section id="bewertungen" class="section animate-on-scroll" style="background: var(--light-bg);">
-        <h2>Das sagen unsere Gäste</h2>
+        <h2>Das sagen unsere GÃ¤ste</h2>
         <div style="max-width: 800px; margin: 0 auto;">
             <div class="elfsight-app-b418132b-5223-43b2-b58f-bebcc918cece" data-elfsight-app-lazy></div>
         </div>
@@ -465,7 +444,7 @@
     <section id="kontakt" class="section animate-on-scroll">
         <h2>Kontakt & Anfahrt</h2>
         <p style="font-size: 1.2em; font-weight: bold; margin-bottom: 20px;">
-            📍 Robert-Schuman-Str. 71, 54536 Kröv
+            ðŸ“ Robert-Schuman-Str. 71, 54536 KrÃ¶v
         </p>
 
         <div class="map-container">
@@ -481,7 +460,7 @@
 
     <footer>
         <p class="footer-note">
-            "Als Ersteller dieser Webseite kann ich nur bestätigen: Das Essen hat mir hervorragend geschmeckt!
+            "Als Ersteller dieser Webseite kann ich nur bestÃ¤tigen: Das Essen hat mir hervorragend geschmeckt!
            
             Lg Elias"
         </p>
@@ -497,29 +476,29 @@
             <a href="https://www.instagram.com/restaurant_destille?igsh=MTZseHJzNWpza2luZg==" target="_blank"><i class="fab fa-instagram"></i></a>
         </div>
 
-        <p style="margin-top: 15px; font-size: 0.8em;">© 2025 Restaurant Destille Bernie's Keller. Alle Rechte vorbehalten.</p>
+        <p style="margin-top: 15px; font-size: 0.8em;">Â© 2025 Restaurant Destille Bernie's Keller. Alle Rechte vorbehalten.</p>
 
         <div id="impressum-section" style="margin-top: 40px; text-align: left; padding: 0 20px;">
             <h3 style="color: white; border-bottom: 1px solid #444; padding-bottom: 5px;">Impressum</h3>
             <p>
-                **Angaben gemäß § 5 TMG:**<br>
-                [VOLLSTÄNDIGER NAME/FIRMA]<br>
+                **Angaben gemÃ¤ÃŸ Â§ 5 TMG:**<br>
+                [VOLLSTÃ„NDIGER NAME/FIRMA]<br>
                 Robert-Schuman-Str. 71<br>
-                54536 Kröv
+                54536 KrÃ¶v
             </p>
             <p>
                 **Kontakt:**<br>
                 Telefon: 06541 8689841<br>
-                E-Mail: [E-Mail-Adresse einfügen]
+                E-Mail: [E-Mail-Adresse einfÃ¼gen]
             </p>
         </div>
     </footer>
 
     <div id="reservationModal" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">×</span>
+            <span class="close-button" onclick="closeModal()">Ã—</span>
             <h3>Reservierung per WhatsApp</h3>
-            <p>Bitte füllen Sie die Felder aus. Wir senden Ihnen eine vorbereitete WhatsApp-Nachricht zur Bestätigung.</p>
+            <p>Bitte fÃ¼llen Sie die Felder aus. Wir senden Ihnen eine vorbereitete WhatsApp-Nachricht zur BestÃ¤tigung.</p>
             <form id="whatsappForm" onsubmit="sendWhatsAppReservation(event)">
                 <label for="name">Ihr Name*</label>
                 <input type="text" id="resName" name="name" required placeholder="Max Mustermann">
@@ -552,9 +531,9 @@
 
     <div id="fullGalleryModal" class="modal">
         <div class="modal-content" style="max-width: 90%; margin: 5% auto;">
-            <span class="close-button" onclick="closeFullGalleryModal()">×</span>
+            <span class="close-button" onclick="closeFullGalleryModal()">Ã—</span>
             <h3>Die komplette Keller-Galerie</h3>
-            <p>Ein tieferer Einblick in unsere Destille, Küche und unsere wunderschöne Umgebung.</p>
+            <p>Ein tieferer Einblick in unsere Destille, KÃ¼che und unsere wunderschÃ¶ne Umgebung.</p>
             
             <div class="gallery-container" style="margin-top: 20px;">
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-01.jpg');">Detailansicht Keller 1</div>
@@ -568,20 +547,20 @@
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-06.jpg');">Bild 6 - Essen Detail</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-07.jpg');">Bild 7 - Einrichtung</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-08.jpg');">Bild 8 - Tischdeko</div>
-                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-09.jpg');">Bild 9 - Außenbereich</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-09.jpg');">Bild 9 - AuÃŸenbereich</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-10.jpg');">Bild 10 - Saisonales Gericht</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-11.jpg');">Bild 11 - Destillierkessel</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-12.jpg');">Bild 12 - Fasslager</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-13.jpg');">Bild 13 - Impression</div>
-                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-14.jpg');">Bild 14 - Gemütliche Ecke</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-14.jpg');">Bild 14 - GemÃ¼tliche Ecke</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-15.jpg');">Bild 15 - Nachtansicht</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-16.jpg');">Bild 16 - Bar</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-17.jpg');">Bild 17 - Innenansicht 2</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-18.jpg');">Bild 18 - Dessert</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-19.jpg');">Bild 19 - Weinprobe</div>
-                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-20.jpg');">Bild 20 - Küche Detail</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-20.jpg');">Bild 20 - KÃ¼che Detail</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-21.jpg');">Bild 21 - Weinberge</div>
-                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-22.jpg');">Bild 22 - Außenanlage</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-22.jpg');">Bild 22 - AuÃŸenanlage</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-23.jpg');">Bild 23 - Speisesaal</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-24.jpg');">Bild 24 - Dekoration</div>
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-25.jpg');">Bild 25 - Impression 3</div>
@@ -590,12 +569,9 @@
             
         </div>
     </div>
-    
-    <script src="https://elfsightcdn.com/platform.js" async></script>
-    <div class="elfsight-app-c76b50da-f554-4254-adea-e25fde1c72a7" data-elfsight-app-lazy></div>
     <script>
         // ****************************************************
-        // KORREKTE WHATSAPP-NUMMER BESTÄTIGT: 01739000432 -> 491739000432
+        // KORREKTE WHATSAPP-NUMMER BESTÃ„TIGT: 01739000432 -> 491739000432
         // ****************************************************
         const WHATSAPP_NUMBER = "491739000432"; 
 
@@ -610,9 +586,9 @@
             const time = document.getElementById('resTime').value;
             const guests = document.getElementById('resGuests').value;
             
-            // Gültigkeitsprüfung (sollte HTML5 'required' übernehmen, dient als Fallback)
+            // GÃ¼ltigkeitsprÃ¼fung (sollte HTML5 'required' Ã¼bernehmen, dient als Fallback)
             if (!name || !date || !time || !guests) {
-                 alert("Bitte füllen Sie alle markierten Felder aus, um die Reservierung zu senden.");
+                 alert("Bitte fÃ¼llen Sie alle markierten Felder aus, um die Reservierung zu senden.");
                  return;
             }
 
@@ -620,8 +596,8 @@
             const dateParts = date.split('-'); // [YYYY, MM, DD]
             const formattedDate = dateParts[2] + '.' + dateParts[1] + '.' + dateParts[0];
 
-            // Der Text, der als vorausgefüllte Nachricht gesendet wird
-            const message = `Hallo Bernie's Keller Team,\n\nich möchte einen Tisch reservieren:\n\n👤 Name: ${name}\n🗓️ Datum: ${formattedDate}\n⏰ Uhrzeit: ${time} Uhr\n👨‍👩‍👧‍👦 Personen: ${guests}\n\nVielen Dank!`;
+            // Der Text, der als vorausgefÃ¼llte Nachricht gesendet wird
+            const message = `Hallo Bernie's Keller Team,\n\nich mÃ¶chte einen Tisch reservieren:\n\nðŸ‘¤ Name: ${name}\nðŸ—“ï¸ Datum: ${formattedDate}\nâ° Uhrzeit: ${time} Uhr\nðŸ‘¨â€ðŸ‘©â€ðŸ‘§â€ðŸ‘¦ Personen: ${guests}\n\nVielen Dank!`;
 
             // URL-Encoding der Nachricht
             const encodedMessage = encodeURIComponent(message);
@@ -629,7 +605,7 @@
             // Generiert den WhatsApp-Link
             const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
 
-            // Schließt das Modal und öffnet WhatsApp im neuen Tab
+            // SchlieÃŸt das Modal und Ã¶ffnet WhatsApp im neuen Tab
             closeModal();
             window.open(whatsappLink, '_blank');
         }
@@ -650,11 +626,11 @@
             modal.style.display = "none";
         }
         
-        // FUNKTIONEN FÜR DIE GROSSE GALERIE
+        // FUNKTIONEN FÃœR DIE GROSSE GALERIE
         function openFullGalleryModal() {
             fullGalleryModal.style.display = "block";
             
-            // Auf Mobilgeräten das Menü schließen, wenn die Galerie geöffnet wird
+            // Auf MobilgerÃ¤ten das MenÃ¼ schlieÃŸen, wenn die Galerie geÃ¶ffnet wird
             if (window.innerWidth <= 1000) {
                  const header = document.getElementById('main-header');
                  if (header.classList.contains('nav-open')) {
@@ -697,13 +673,13 @@
             if (a.getAttribute('href') && a.getAttribute('href').startsWith('#')) {
                 // Link ist ein Anker (z.B. #impressum) -> normales Scrollen
             } else {
-                // Link ist "Alle Bilder" oder "Reservieren" (öffnet Modal)
+                // Link ist "Alle Bilder" oder "Reservieren" (Ã¶ffnet Modal)
                 event.preventDefault(); // Verhindert das Standardverhalten des Links
             }
             
             if (window.innerWidth <= 1000) {
                 if (header.classList.contains('nav-open')) {
-                    // Timeout nötig, damit der Klick verarbeitet wird, bevor das Menü schließt
+                    // Timeout nÃ¶tig, damit der Klick verarbeitet wird, bevor das MenÃ¼ schlieÃŸt
                     setTimeout(() => toggleMenu(), 100); 
                 }
             }
