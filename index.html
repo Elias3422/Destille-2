@@ -109,6 +109,8 @@
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
         .animate-on-scroll.in-view { opacity: 1; transform: translateY(0); }
+        
+        /* HIER KÖNNTEN SIE ZUKÜNFTIG delay-4 bis delay-25 hinzufügen, falls nötig */
 
         /* HIGHLIGHT BAR */
         .highlight-bar { background: var(--accent-color); color: white; padding: 30px 5%; margin: 50px 0; }
@@ -190,9 +192,14 @@
             .staff-card { height: auto; } /* Passt sich besser an den Inhalt an */
             
             .section { padding: 60px 5%; }
+            
+            /* Größerer Modal-Inhalt für die Galerie auf Mobilgeräten */
+            .modal-content {
+                margin: 5% auto; /* Mehr Platz oben/unten */
+            }
         }
 
-        /* MODAL STYLES */
+        /* MODAL STYLES (Reservierung und Galerie) */
         .modal {
             display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%;
             overflow: auto; background-color: rgba(0,0,0,0.8);
@@ -201,6 +208,12 @@
             background-color: #fefefe; margin: 15% auto; padding: 30px; border: 1px solid #888;
             width: 90%; max-width: 500px; border-radius: 10px; position: relative;
         }
+        /* Style für das Galerie-Modal, damit es breiter ist */
+        #fullGalleryModal .modal-content {
+            max-width: 90%;
+            margin: 5% auto; /* Mehr Platz oben/unten */
+        }
+
         .close-button {
             color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;
         }
@@ -297,11 +310,13 @@
             <div class="image-placeholder animate-on-scroll delay-2" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/Küche-2.jpg');">Küche</div>
             
             <div class="image-placeholder animate-on-scroll delay-3" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/aussen-3.jpg');">Terrasse/Außenansicht</div>
-        
-            <div class="image-placeholder animate-on-scroll delay-4" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/Berg-4.jpg');">Aussichtenin der nähe</div>
-            <div class="image-placeholder animate-on-scroll delay-5" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/BILD-5.jpg');">Am überlegen</div>
-            <div class="image-placeholder animate-on-scroll delay-6" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/BILD-6.jpg');">Am überlegen</div>
             
+            <div class="image-placeholder cta-button animate-on-scroll delay-4" onclick="openFullGalleryModal()" style="background: var(--primary-color); cursor: pointer; height: 100px; line-height: 1.2em; border-radius: 5px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); width: 100%; min-width: 280px; max-width: 900px; margin: 30px auto; padding: 20px;">
+                <i class="fas fa-camera" style="margin-right: 10px;"></i>
+                Alle 25 Bilder anzeigen
+            </div>
+            
+        </div>
         
         <h2 style="margin-top: 80px;" class="animate-on-scroll">Das Team von Bernie's Keller</h2>
         <p class="animate-on-scroll">Wir sind mit Herz und Seele für Sie da!</p>
@@ -419,6 +434,46 @@
         </div>
     </div>
 
+    <div id="fullGalleryModal" class="modal">
+        <div class="modal-content" style="max-width: 90%; margin: 5% auto;">
+            <span class="close-button" onclick="closeFullGalleryModal()">×</span>
+            <h3>Die komplette Keller-Galerie</h3>
+            <p>Ein tieferer Einblick in unsere Destille, Küche und unsere wunderschöne Umgebung.</p>
+            
+            <div class="gallery-container" style="margin-top: 20px;">
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-01.jpg');">Detailansicht Keller 1</div>
+                
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-02.jpg');">Detailansicht Keller 2</div>
+                
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-03.jpg');">Detailansicht Keller 3</div>
+
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-04.jpg');">Bild 4 - Moselblick</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-05.jpg');">Bild 5 - Weinflasche</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-06.jpg');">Bild 6 - Essen Detail</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-07.jpg');">Bild 7 - Einrichtung</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-08.jpg');">Bild 8 - Tischdeko</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-09.jpg');">Bild 9 - Außenbereich</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-10.jpg');">Bild 10 - Saisonales Gericht</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-11.jpg');">Bild 11 - Destillierkessel</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-12.jpg');">Bild 12 - Fasslager</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-13.jpg');">Bild 13 - Impression</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-14.jpg');">Bild 14 - Gemütliche Ecke</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-15.jpg');">Bild 15 - Nachtansicht</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-16.jpg');">Bild 16 - Bar</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-17.jpg');">Bild 17 - Innenansicht 2</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-18.jpg');">Bild 18 - Dessert</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-19.jpg');">Bild 19 - Weinprobe</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-20.jpg');">Bild 20 - Küche Detail</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-21.jpg');">Bild 21 - Weinberge</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-22.jpg');">Bild 22 - Außenanlage</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-23.jpg');">Bild 23 - Speisesaal</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-24.jpg');">Bild 24 - Dekoration</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-25.jpg');">Bild 25 - Impression 3</div>
+                
+            </div>
+            
+        </div>
+    </div>
     <script>
         // ****************************************************
         // KORREKTE WHATSAPP-NUMMER BESTÄTIGT: 01739000432 -> 491739000432
@@ -464,7 +519,8 @@
         // 10.2 MODAL LOGIK
         // ----------------------------------------------------
         const modal = document.getElementById('reservationModal');
-        
+        const fullGalleryModal = document.getElementById('fullGalleryModal'); // NEU: Galerie Modal
+
         function openModal() {
             modal.style.display = "block";
             // Setzt das Mindestdatum auf heute
@@ -474,9 +530,21 @@
         function closeModal() {
             modal.style.display = "none";
         }
+        
+        // NEUE FUNKTIONEN FÜR DIE GROSSE GALERIE
+        function openFullGalleryModal() {
+            fullGalleryModal.style.display = "block";
+        }
+        function closeFullGalleryModal() {
+            fullGalleryModal.style.display = "none";
+        }
+
         window.onclick = function(event) {
             if (event.target == modal) {
                 closeModal();
+            }
+            if (event.target == fullGalleryModal) {
+                closeFullGalleryModal();
             }
         }
         
