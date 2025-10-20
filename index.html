@@ -52,6 +52,13 @@
         nav a:hover::after { width: 100%; left: 0; transform: translateX(0); }
 
         /* HEADER BUTTONS - Fix */
+        .contact-buttons { 
+            display: flex; 
+            align-items: center;
+            /* Ermöglicht Zeilenumbruch auf mobilen Geräten */
+            flex-wrap: wrap; 
+            justify-content: flex-end; 
+        }
         .contact-buttons a {
             background: var(--accent-color); color: white; padding: 8px 15px; border-radius: 25px;
             margin-left: 10px; 
@@ -236,20 +243,35 @@
             .menu-toggle { display: block; }
             .nav-open nav { display: flex; }
             
+            /* Anpassung der mobilen Buttons im Header */
+            header { 
+                padding-bottom: 15px; /* Mehr Platz für Buttons untereinander */
+                align-items: flex-start; /* Logo oben links ausrichten */
+            }
+            .contact-buttons {
+                order: 3; /* Buttons unterhalb des Logos und des Menüs */
+                width: 100%;
+                margin-top: 10px; /* Abstand nach oben */
+                justify-content: space-around; /* Buttons gleichmäßig verteilen */
+            }
+            .contact-buttons a {
+                flex-grow: 1; /* Nehmen den verfügbaren Platz ein */
+                margin: 0 5px; /* Abstand zwischen den Buttons */
+                max-width: 45%; /* Begrenzung der Breite */
+            }
+
             .gallery-container { flex-direction: column; align-items: center; }
             .image-placeholder, .staff-card { width: 100%; min-width: auto; height: 200px; }
-            .staff-card { height: auto; } /* Passt sich besser an den Inhalt an */
+            .staff-card { height: auto; } 
             
             .section { padding: 60px 5%; }
             
-            /* Größerer Modal-Inhalt für die Galerie auf Mobilgeräten */
             .modal-content {
-                margin: 5% auto; /* Mehr Platz oben/unten */
+                margin: 5% auto; 
             }
             
-            /* Responsiveness für die Spezialitäten-Liste */
             .specialty-item {
-                flex: 1 1 100%; /* Auf Mobilgeräten volle Breite */
+                flex: 1 1 100%; 
                 max-width: 100%;
             }
         }
