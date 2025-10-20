@@ -114,17 +114,19 @@
         .highlight-bar { background: var(--accent-color); color: white; padding: 30px 5%; margin: 50px 0; }
         .highlight-bar .cta-button { line-height: 1.2em; }
         
-        /* VIDEO CONTAINER - MAXIMALE GRÖSSE FIX */
+        /* VIDEO CONTAINER (KORRIGIERT FÜR MP4) */
         .video-container { 
-            /* Erlaubt dem Container, so breit wie die Sektion zu werden */
-            max-width: none; 
-            margin: 30px 0; 
+            max-width: 900px; /* Optional: Maximale Breite festlegen */
+            margin: 30px auto; /* Zentrieren des Videos */
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
-        .video-wrapper { padding-top: 56.25%; position: relative; } /* Aspect Ratio 16:9 */
-        .video-container wistia-player { border: 0; width: 100%; height: 100%; position: absolute; top: 0; }
+        .video-container video { 
+            display: block;
+            width: 100%; 
+            height: auto; 
+        }
         
         /* GALERIE / MITARBEITER */
         .gallery-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px; }
@@ -227,8 +229,6 @@
 </head>
 
 <body>
-    <script src="https://fast.wistia.com/player.js" async></script>
-    <script src="https://fast.wistia.com/embed/j1b0vbritr.js" async type="module"></script>
     <script src="https://elfsightcdn.com/platform.js" async></script>
     
     <header id="main-header">
@@ -292,13 +292,15 @@
     <section class="section animate-on-scroll">
         <h2>Ein Blick in unsere Destille</h2>
         <p>Sehen Sie, wie unsere Spezialitäten entstehen – die Kunst des Brennens.</p>
+        
         <div class="video-container">
-            <div class="video-wrapper">
-                <style>wistia-player[media-id='j1b0vbritr']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/j1b0vbritr/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
-                <wistia-player media-id="j1b0vbritr" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></wistia-player>
-            </div>
+            <video controls playsinline preload="metadata" poster="./bilder/video-vorschaubild.jpg">
+                <source src="./videos/ihr-video-name.mp4" type="video/mp4">
+                
+                Ihr Browser unterstützt das Video-Tag leider nicht.
+            </video>
         </div>
-    </section>
+        </section>
 
     <section id="restaurant" class="section animate-on-scroll" style="background: var(--light-bg);">
         <h2>Unsere Atmosphäre</h2>
@@ -381,14 +383,14 @@
             <h3 style="color: white; border-bottom: 1px solid #444; padding-bottom: 5px;">Impressum</h3>
             <p>
                 **Angaben gemäß § 5 TMG:**<br>
-                Restaurant Destille Bernie's Keller<br>
+                [VOLLSTÄNDIGER NAME/FIRMA]<br>
                 Robert-Schuman-Str. 71<br>
                 54536 Kröv
             </p>
             <p>
                 **Kontakt:**<br>
                 Telefon: 06541 8689841<br>
-                E-Mail: 
+                E-Mail: [E-Mail-Adresse einfügen]
             </p>
         </div>
     </footer>
@@ -435,9 +437,9 @@
             <p>Ein tieferer Einblick in unsere Destille, Küche und unsere wunderschöne Umgebung.</p>
             
             <div class="gallery-container" style="margin-top: 20px;">
-                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/Restaurant-1.jpg');"></div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-01.jpg');">Detailansicht Keller 1</div>
                 
-                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-02.jpg');">Detailansi</div>
+                <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-02.jpg');">Detailansicht Keller 2</div>
                 
                 <div class="image-placeholder" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('./bilder/GALERIE-BILD-03.jpg');">Detailansicht Keller 3</div>
 
@@ -525,7 +527,7 @@
             modal.style.display = "none";
         }
         
-        // NEUE FUNKTIONEN FÜR DIE GROSSE GALERIE
+        // FUNKTIONEN FÜR DIE GROSSE GALERIE
         function openFullGalleryModal() {
             fullGalleryModal.style.display = "block";
             
