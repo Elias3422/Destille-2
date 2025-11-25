@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Destille Bernie's Keller – Mosel Genuss & Direkte Reservierung</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght:400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
@@ -121,14 +121,20 @@
             margin-top: 0;
             margin-bottom: 15px;
         }
-        .opening-hours-box .status-open {
+        
+        /* Styles für den Status */
+        .opening-hours-box .status-open,
+        .opening-hours-box .status-closed {
             display: inline-flex;
             align-items: center;
             padding: 5px 10px;
             margin-bottom: 15px;
-            background-color: #e6ffec; 
             border-radius: 5px;
             font-weight: bold;
+        }
+        
+        .opening-hours-box .status-open {
+            background-color: #e6ffec; 
             color: #1a7e2e; 
         }
         .opening-hours-box .status-open::before {
@@ -138,6 +144,20 @@
             margin-right: 5px;
             line-height: 0;
         }
+        
+        .opening-hours-box .status-closed {
+            background-color: #ffebe6; 
+            color: #cc3700; 
+        }
+        .opening-hours-box .status-closed::before {
+            content: '•';
+            color: var(--accent-color);
+            font-size: 1.5em;
+            margin-right: 5px;
+            line-height: 0;
+        }
+        /* Ende Styles für den Status */
+        
         .opening-hours-box p {
             font-size: 1.1em;
             margin: 10px 0;
@@ -425,7 +445,8 @@
             <i class="fas fa-chevron-up" style="font-size: 1.5em; color: var(--primary-color); margin-bottom: 15px;"></i>
             <h3>Öffnungszeiten</h3>
             
-            <div class="status-open">Heute geöffnet</div>
+            <div id="status-display">
+                </div>
             
             <p>
                 Geöffnet vom <strong>01.04.2025 bis 31.12.2025</strong>
@@ -550,6 +571,12 @@
                 <p>Küchen-Team</p>
             </div>
         </div>
+        
+        <p style="margin-top: 40px;">
+            <a href="#" onclick="openFullGalleryModal(); return false;" class="cta-button" style="background: var(--primary-color);">
+                <i class="fas fa-camera"></i> Alle Bilder in der Galerie ansehen
+            </a>
+        </p>
     </section>
 
     <section id="veranstaltungen" class="section animate-on-scroll" style="background: white;">
@@ -834,11 +861,80 @@
                 }
             });
         }, { threshold: 0.15 });
+        
+        
+        // 10.5 AUTOMATISCHE ÖFFNUNGSZEITEN-STATUS-FUNKTION
+        function updateOpeningStatus() {
+            const statusDisplay = document.getElementById('status-display');
+            if (!statusDisplay) return; // Sicherheits-Check
 
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinutes = now.getMinutes();
+            const currentTotalMinutes = currentHour * 60 + currentMinutes;
+
+            // Definiere die Zeiten in Minuten seit Mitternacht
+            const OPEN_TIME_MINUTES = 17 * 60; // 17:00 Uhr
+            const CLOSE_TIME_MINUTES = 21 * 60; // 21:00 Uhr
+            
+            // Saison-Definition (für das Jahr 2025, wie im HTML angegeben)
+            const currentYear = now.getFullYear();
+            // Monate sind 0-basiert: 3 = April, 11 = Dezember
+            // Der Saisonstart (01.04.) und das Saisonende (31.12. 23:59:59)
+            const startSeason = new Date(currentYear, 3, 1); 
+            const endSeason = new Date(currentYear, 11, 31, 23, 59, 59); 
+            
+            let statusHTML = '';
+            let nextCheckDelayMs = 3600000; // Standard: 1 Stunde
+
+            // 1. Saisonprüfung
+            if (now >= startSeason && now <= endSeason) {
+                // In der Saison: Prüfe die Uhrzeit
+                
+                if (currentTotalMinutes >= OPEN_TIME_MINUTES && currentTotalMinutes < CLOSE_TIME_MINUTES) {
+                    // **STATUS: GEÖFFNET (17:00 - 20:59)**
+                    statusHTML = '<div class="status-open">Heute geöffnet</div>';
+                    
+                    // Berechne Zeit bis zum Schließen (21:00 Uhr) + 1 Minute Puffer
+                    let minutesUntilClose = CLOSE_TIME_MINUTES - currentTotalMinutes;
+                    nextCheckDelayMs = (minutesUntilClose + 1) * 60 * 1000; 
+                    
+                } else if (currentTotalMinutes < OPEN_TIME_MINUTES) {
+                    // **STATUS: NOCH GESCHLOSSEN (Wartet auf 17:00 Uhr) -> HIER WURDE GEÄNDERT**
+                    statusHTML = '<div class="status-closed">Geschlossen. Öffnet um 17:00 Uhr.</div>';
+                    
+                    // Berechne Zeit bis zum Öffnen (17:00 Uhr) + 1 Minute Puffer
+                    let minutesUntilOpen = OPEN_TIME_MINUTES - currentTotalMinutes;
+                    nextCheckDelayMs = (minutesUntilOpen + 1) * 60 * 1000; 
+                    
+                } else { // currentTotalMinutes >= CLOSE_TIME_MINUTES
+                    // **STATUS: GESCHLOSSEN (Nach 21:00 Uhr)**
+                    statusHTML = '<div class="status-closed">Heute geschlossen (Schlusszeit 21:00 Uhr erreicht).</div>';
+                    
+                    // Berechne Zeit bis zur Öffnung am nächsten Tag (17:00 Uhr) + 1 Minute Puffer
+                    let minutesUntilNextOpen = (1440 - currentTotalMinutes) + OPEN_TIME_MINUTES; // 1440 Minuten pro Tag
+                    nextCheckDelayMs = (minutesUntilNextOpen + 1) * 60 * 1000;
+                }
+            } else {
+                // **STATUS: SAISONPAUSE**
+                 statusHTML = '<div class="status-closed">Saisonpause (Derzeit geschlossen)</div>';
+                 // Für die Dauer der Saisonpause wird nur einmal am Tag geprüft, ob die Saison wieder beginnt.
+                 nextCheckDelayMs = 86400000; // 24 Stunden
+            }
+            
+            statusDisplay.innerHTML = statusHTML;
+            
+            // Setze den nächsten Check und begrenze das Delay auf max. 24h (86400000 ms)
+            nextCheckDelayMs = Math.min(nextCheckDelayMs, 86400000); 
+            setTimeout(updateOpeningStatus, nextCheckDelayMs);
+        }
+
+        // Führe Animation und Status-Update beim Laden aus
         window.addEventListener('load', () => {
              elementsToAnimate.forEach(element => {
                 observer.observe(element);
             });
+            updateOpeningStatus(); // Erster Aufruf der Status-Funktion
         });
     </script>
 </body>
